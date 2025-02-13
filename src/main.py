@@ -2,7 +2,7 @@ import sqlite3
 import pandas as pd
 import json
 
-f=open('ejemplo.json','r')
+f=open('docs/ejemplo.json','r')
 datos=json.load(f)
 print(datos)
 print(datos["fichajes"])
