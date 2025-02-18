@@ -7,11 +7,6 @@ from pprint import pprint
 def load_data():
     with open('docs/datos.json','r') as f:
         datos=json.load(f)
-    print(datos.keys())
-    # pprint(datos['empleados'])
-    # exit()
-    # pprint(datos['clientes'])
-    # pprint(datos['tickets_emitidos'])
     return datos
 
 def create_table_clientes(cur:sqlite3.Cursor):
@@ -48,7 +43,61 @@ def fill_table_empleados(cur:sqlite3.Cursor, data):
                     "VALUES ('%d','%s', '%s', '%s')" %
                     (int(elem['id_emp']), elem['nombre'], elem['nivel'],elem['fecha_contrato']))
 
-def main():
+def create_table_tipos_incidentes(cur:sqlite3.Cursor):
+    cur.execute("DROP TABLE IF EXISTS tipos_incidentes;")
+    cur.execute("CREATE TABLE IF NOT EXISTS tipos_incidentes("
+        "id_inci INTEGER PRIMARY KEY,"
+        "nombre TEXT"
+        ");")
+
+def fill_table_tipos_incidentes(cur:sqlite3.Cursor, data):
+    for elem in data:
+        cur.execute("INSERT OR IGNORE INTO tipos_incidentes(id_inci,nombre)"\
+                    "VALUES ('%d','%s')" %
+                    (int(elem['id_inci']), elem['nombre']))
+
+def create_table_tickets_emitidos(cur:sqlite3.Cursor):
+    cur.execute("DROP TABLE IF EXISTS tickets_emitidos;")
+    cur.execute("CREATE TABLE IF NOT EXISTS tickets_emitidos("
+        "id_tick INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "cliente INTEGER,"
+        "fecha_apertura TEXT,"
+        "fecha_cierre TEXT,"
+        "es_mantenimiento INTEGER NOT NULL CHECK (es_mantenimiento IN (0, 1)),"
+        "satisfaccion_cliente INTEGER,"
+        "tipo_incidencia INTEGER,"
+        "FOREIGN KEY (cliente) REFERENCES clientes(cliente),"
+        "FOREIGN KEY (tipo_incidencia) REFERENCES tipos_incidentes(id)"
+        ");")
+
+def fill_table_tickets_emitidos(cur:sqlite3.Cursor, data):
+    for elem in data:
+        cur.execute("INSERT OR IGNORE INTO tickets_emitidos(cliente,fecha_apertura,fecha_cierre,es_mantenimiento,satisfaccion_cliente,tipo_incidencia)"\
+                    "VALUES ('%d','%s','%s','%d','%d','%d')" %
+                    (int(elem['cliente']), elem['fecha_apertura'], elem['fecha_cierre'], elem['es_mantenimiento'], elem['satisfaccion_cliente'], elem['tipo_incidencia']))
+
+def create_table_tickets_empleados(cur:sqlite3.Cursor):
+    cur.execute("DROP TABLE IF EXISTS tickets_empleados;")
+    cur.execute("CREATE TABLE IF NOT EXISTS tickets_empleados("
+        "id_emp INTEGER,"
+        "id_ticket INTEGER,"
+        "fecha TEXT,"
+        "tiempo REAL,"
+        "PRIMARY KEY (id_emp,id_ticket),"
+        "FOREIGN KEY (id_emp) REFERENCES empleados(id_emp),"
+        "FOREIGN KEY (id_ticket) REFERENCES tickets_emitidos(id_tick)"
+        ");")
+
+def fill_table_tickets_empleados(cur:sqlite3.Cursor, data):
+    id_ticket = 1
+    for elem in data:
+        for e in elem["contactos_con_empleados"]:
+            cur.execute("INSERT OR IGNORE INTO tickets_empleados(id_emp,id_ticket,fecha,tiempo)"\
+                        "VALUES ('%d','%d','%s','%f')" %
+                        (int(e['id_emp']), id_ticket, e['fecha'], e['tiempo']))
+        id_ticket += 1
+
+def load_data_from__json():
     datos = load_data()
     con = sqlite3.connect('docs/datos.db')
     cur = con.cursor()
@@ -56,52 +105,29 @@ def main():
     con.commit()
     fill_table_clientes(cur, datos['clientes'])
     con.commit()
-    cur.execute("Select * from clientes;")
-    pprint(cur.fetchall())
     create_table_empleados(cur)
     con.commit()
     fill_table_empleados(cur, datos['empleados'])
     con.commit()
-    cur.execute("Select * from empleados;")
-    pprint(cur.fetchall())
+    create_table_tipos_incidentes(cur)
+    con.commit()
+    fill_table_tipos_incidentes(cur, datos['tipos_incidentes'])
+    con.commit()
+    create_table_tickets_emitidos(cur)
+    con.commit()
+    fill_table_tickets_emitidos(cur, datos['tickets_emitidos'])
+    con.commit()
+    create_table_tickets_empleados(cur)
+    con.commit()
+    fill_table_tickets_empleados(cur, datos['tickets_emitidos'])
+    con.commit()
+    
+def main():
+    load_data_from__json()
 
     
 
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
-# con = sqlite3.connect('docs/datos.db')
-
-# cur.execute("DROP TABLE IF EXISTS tickets_emitidos;")
-# cur.execute("CREATE TABLE IF NOT EXISTS tickets_emitidos("
-#     "id INTEGER PRIMARY KEY,"
-#     "cliente INTEGER,"
-#     "es_mantenimiento INTEGER NOT NULL CHECK (es_mantenimiento IN (0, 1)),"
-#     "fecha_apertura TEXT,"
-#     "fecha_cierre TEXT,"
-#     "satisfaccion_cliente INTEGER,"
-#     "tipo_incidencia INTEGER"
-#     ");")
-# con.commit()
-# cur.execute("PRAGMA table_info(tickets_emitidos);")
-# print(cur.fetchall())
-# exit()
-# for elem in datos["tickets_emitidos"]:
-#     #print (elem)
-#     clave= list(elem.keys())[0]
-#     print(clave)
-#     print (elem[clave]["nombre"])
-
-#     cur.execute("INSERT OR IGNORE INTO fichajes(id,nombre,sucursal,departamento)"\
-#                 "VALUES ('%d','%s', '%s', '%s')" %
-#                 (int(clave), elem[clave]['nombre'], elem[clave]['sucursal'],elem[clave]['departamento']))
-#     con.commit()
 
