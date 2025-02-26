@@ -17,7 +17,6 @@ def graficas():
         layout_title_text="Figura"
     )
     # fig.show()
-
     import plotly
     a = plotly.utils.PlotlyJSONEncoder
     graphJSON = json.dumps(fig, cls=a)
