@@ -39,15 +39,14 @@ def graficas():
     a = plotly.utils.PlotlyJSONEncoder
     # Primer apartado
     values_1 = stats.showMean()
-
-    values1_dict = pd.DataFrame({
-        "Tipo": ["Mantenimiento", "No Mantenimiento"],
-        "Número de incidentes": values_1
-    })
-
-
-    fig1 = px.bar(values1_dict, x="Tipo", y="Número de incidentes", title="Número de incidentes agrupados por mantenimiento o no")
-
+    fig1 = go.Figure(
+      data=[go.Bar(y=[values_1[0], values_1[1]],x=["Mantenimiento", "No Mantenimiento"])],
+      layout_title_text="Número de incidentes agrupados por mantenimiento o no",
+    )
+    fig1.update_layout(
+        xaxis_title="Tipo",
+        yaxis_title="Número de incidentes"
+    )
     graph1 = json.dumps(fig1, cls=a)
 
     # Segundo apartado

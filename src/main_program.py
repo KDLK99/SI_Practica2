@@ -135,26 +135,20 @@ def calc_values():
 
     mean_incident = df[df.satisfaccion_cliente > 5]["satisfaccion_cliente"].mean()
     std_incident = df[df.satisfaccion_cliente > 5]["satisfaccion_cliente"].std()
-    print(f"Media de los incidentes con valoración mayor de 5: {mean_incident:.2f}")
-    print(f"Desviación típica de los incidentes con valoración mayor de 5: {std_incident:.2f}")
+    print(f"Media de valoración en los incidentes con valoración mayor de 5: {mean_incident:.2f}")
+    print(f"Desviación típica de valoración en los incidentes con valoración mayor de 5: {std_incident:.2f}")
     results.append(mean_incident)
     results.append(std_incident)
 
     print()
 
-    df = pd.read_sql_query(f"SELECT * FROM tickets_emitidos", con)
-    print(f"Media del número de incidentes por cliente: {len(df)/max(df['cliente'])}")
-    results.append(len(df)/max(df['cliente']))
-
     tickets_emitidos = pd.read_sql('SELECT * FROM tickets_emitidos', con)
-
-    # Contar el número de incidentes por cliente
     incidentes_por_cliente = tickets_emitidos['cliente'].value_counts()
-
-    # Calcular la desviación típica del número de incidentes por cliente
     desviacion_tipica = incidentes_por_cliente.std()
-
+    media = incidentes_por_cliente.mean()
+    print(f"Media del número de incidentes por cliente: {media:.2f}")
     print(f'Desviación típica del número de incidentes por cliente: {desviacion_tipica:.2f}')
+    results.append(media)    
     results.append(desviacion_tipica)
 
     print()

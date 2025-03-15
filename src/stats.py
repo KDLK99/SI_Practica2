@@ -12,8 +12,7 @@ def showMean():
     aperturaNoMantenimiento = pd.to_datetime(df[df["es_mantenimiento"] == False]["fecha_apertura"]) 
     cierreNoMantenimiento = pd.to_datetime(df[df["es_mantenimiento"] == False]["fecha_cierre"]) 
     diferenciaNoMantenimiento = aperturaNoMantenimiento - cierreNoMantenimiento
-
-    return (abs(diferenciaMantenimiento.dt.days.median()), abs(diferenciaNoMantenimiento.dt.days.median()))
+    return (abs(diferenciaMantenimiento.dt.days.mean()), abs(diferenciaNoMantenimiento.dt.days.mean()))
 
 def top5Critics():
     con = sqlite3.connect('../docs/datos.db')
