@@ -1,5 +1,6 @@
 import sqlite3
 import pandas as pd
+import plotly
 
 def showMean():
     con = sqlite3.connect('../docs/datos.db')

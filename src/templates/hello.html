@@ -1,15 +1,37 @@
 <title>Hello from Flask</title>
-{% if name %}
-<h1>Hello {{ name }}!</h1>
-{% else %}
-<h1>Hello, World!</h1>
-{% endif %}
 
-{% if graphJSON %}
-  <div id='chart' class='chart'”></div>
+{% if graph1 %}
+  <div id='chart1' class='chart'”></div>
     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
     <script type='text/javascript'>
-      var graphs = {{graphJSON | safe}};
-      Plotly.plot('chart',graphs,{});
+      var graphs = {{graph1 | safe}};
+      Plotly.plot('chart1',graphs,{});
+    </script>
+{% endif %}
+
+{% if graph3 %}
+  <div id='chart3' class='chart'”></div>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script type='text/javascript'>
+      var graphs = {{graph3 | safe}};
+      Plotly.plot('chart3',graphs,{});
+    </script>
+{% endif %}
+
+{% if graph4 %}
+  <div id='chart4' class='chart'”></div>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script type='text/javascript'>
+      var graphs = {{graph4 | safe}};
+      Plotly.plot('chart4',graphs,{});
+    </script>
+{% endif %}
+
+{% if graph5 %}
+  <div id='chart5' class='chart'”></div>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script type='text/javascript'>
+      var graphs = {{graph5 | safe}};
+      Plotly.plot('chart5',graphs,{});
     </script>
 {% endif %}
