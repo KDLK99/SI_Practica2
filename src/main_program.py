@@ -98,7 +98,7 @@ def fill_table_tickets_empleados(cur:sqlite3.Cursor, data):
                         (int(e['id_emp']), id_ticket, e['fecha'], e['tiempo']))
         id_ticket += 1
 
-def load_data_from__json():
+def load_data_from_json():
     datos = load_data()
     con = sqlite3.connect('../docs/datos.db')
     cur = con.cursor()
@@ -239,7 +239,7 @@ def calc_values():
 
 
 def main():
-    load_data_from__json()
+    load_data_from_json()
     calc_values()
 
 
