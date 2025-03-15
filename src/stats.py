@@ -24,22 +24,6 @@ def showEmployees():
     df = pd.read_sql_query("SELECT nombre FROM empleados e JOIN tickets_empleados t ON e.id_emp = t.id_emp", con)
     return df["nombre"].value_counts()
 
-'''
-def time_type_incident():
-    con = sqlite3.connect('../docs/datos.db')
-    df = pd.read_sql_query("SELECT * FROM tickets_emitidos", con)
-
-    type_list = list(range(1,max(df["tipo_incidencia"]+1)))
-    print(type_list)
-
-    datos = []
-    for i in range(1, max(df["tipo_incidencia"]+1)):
-        apertura_tipo_incidente = pd.to_datetime(df[df.tipo_incidencia == i]['fecha_apertura'])
-        cierre_tipo_incidente= pd.to_datetime(df[df.tipo_incidencia == i]['fecha_cierre'])
-        datos.append((abs(apertura_tipo_incidente-cierre_tipo_incidente)))
-
-    return (datos, type_list)
-'''
 
 def time_type_incident():
     # Conectar a la base de datos SQLite
