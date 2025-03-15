@@ -225,6 +225,7 @@ def calc_values():
 
     print(f"Empleado con más tickets: {empleado_max} ({max_tickets} veces)")
     print(f"Empleado con menos tickets: {empleado_min} ({min_tickets} veces)")
+    print()
     results.append((empleado_max, max_tickets))
     results.append((empleado_min, min_tickets))
 
@@ -232,9 +233,56 @@ def calc_values():
     return results
 
 
+def calc_values2():
+    print("\n----- EJERCICIO 3 -----\n")
+    con = sqlite3.connect('../docs/datos.db')
+    df = pd.read_sql_query("SELECT e.id_emp, e.nombre, e.nivel, t.cliente, te.fecha, te.tiempo, t.id_tick, t.fecha_apertura, t.fecha_cierre, t.es_mantenimiento, t.satisfaccion_cliente, t.tipo_incidencia FROM empleados e JOIN tickets_empleados te ON e.id_emp = te.id_emp JOIN tickets_emitidos t ON te.id_ticket = t.id_tick;", con)
+    df = df[df.tipo_incidencia == 5]
+    
+    ## Empleado ##
+    print("\n-- Empleados --\n")
+    df_empleados = df.groupby("id_emp")
+
+    df_empleados2 = df_empleados['id_tick'].count().reset_index()
+    df_empleados2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
+    print("Número de incidentes por empleado:")
+    print(df_empleados2)
+
+    #df_empleados3 = 
+
+
+
+
+
+    ## Nivel de empleado ##
+    print("\n-- Nivel --\n")
+    df_nivel = df.groupby("nivel")
+
+    df_nivel2 = df_nivel['id_tick'].count().reset_index()
+    df_nivel2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
+    print("Número de incidentes por nivel:")
+    print(df_nivel2)
+
+
+    ## Cliente ##
+    print("\n-- Cliente --\n")
+    df_cliente = df.groupby("cliente")
+
+    df_cliente2 = df_cliente['id_tick'].count().reset_index()
+    df_cliente2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
+    print("Número de incidentes por cliente:")
+    print(df_cliente2)
+
+
+    ## Tipo de incidente ##
+
+    ## Dia de la semana ##
+
+
 def main():
     load_data_from_json()
     calc_values()
+    calc_values2()
 
 
 
