@@ -75,7 +75,7 @@ def fill_table_tickets_emitidos(cur:sqlite3.Cursor, data):
     for elem in data:
         cur.execute("INSERT OR IGNORE INTO tickets_emitidos(cliente,fecha_apertura,fecha_cierre,es_mantenimiento,satisfaccion_cliente,tipo_incidencia)"\
                     "VALUES ('%d','%s','%s','%d','%d','%d')" %
-                    (int(elem['cliente']), elem['fecha_apertura'], elem['fecha_cierre'], elem['es_mantenimiento'], elem['satisfaccion_cliente'], elem['tipo_incidencia']))
+                    (int(elem['cliente']), elem['fecha_apertura'], elem['contactos_con_empleados'][-1]['fecha'], elem['es_mantenimiento'], elem['satisfaccion_cliente'], elem['tipo_incidencia']))
 
 def create_table_tickets_empleados(cur:sqlite3.Cursor):
     cur.execute("DROP TABLE IF EXISTS tickets_empleados;")
