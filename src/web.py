@@ -79,13 +79,14 @@ def graficas():
                       annotation_text=f"5% - Tipo {tipo}")
         fig2.add_hline(y=percentiles.loc[tipo, 0.90], line_dash="dot", line_color="blue",
                       annotation_text=f"90% - Tipo {tipo}")
+    fig2.show()
     graph2 = json.dumps(fig2, cls=a)
-
+    graph2 = fig2.to_json()
 
     # Tercer apartado
     values_3 = stats.top5Critics()
     fig3 = go.Figure(
-        data=[go.Bar(y=values_3.values, x=values_3.keys().values)],
+        data=[go.Bar(y=list(values_3.values), x=list(values_3.keys().values))],
         layout_title_text="5 clientes más críticos",
     )
     fig3.update_layout(
@@ -97,7 +98,7 @@ def graficas():
     # Cuarto apartado
     values_4 = stats.showEmployees()
     fig4 = go.Figure(
-        data=[go.Bar(y=values_4.values, x=values_4.keys().values)],
+        data=[go.Bar(y=list(values_4.values), x=list(values_4.keys().values))],
         layout_title_text="Usuarios con las acciones realizadas por los empleados",
     )
     fig4.update_layout(
