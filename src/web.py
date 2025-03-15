@@ -13,7 +13,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return '<p>Hello, World!</p>'
+    return '<h2>Inicio</h2>' \
+           '<a href=/ejercicio_2>Ejercicio 2</a>' \
+           '<br>' \
+           '<a href=/ejercicio_4>Ejercicio 4</a>'
 
 @app.route('/ejercicio_2')
 def ejercicio2():
@@ -30,7 +33,10 @@ def ejercicio2():
                 f'<p><b>Diferencia mínima:</b> {results[9]} días</p>' \
                 f'<p><b>Diferencia máxima:</b> {results[10]} días</p>' \
                 f'<p><b>Empleado con más tickets:</b> {results[11][0]} ({results[11][1]} veces)</p>' \
-                f'<p><b>Empleado con menos tickets:</b> {results[12][0]} ({results[12][1]} veces)</p>'
+                f'<p><b>Empleado con menos tickets:</b> {results[12][0]} ({results[12][1]} veces)</p>' \
+                f'<br>' \
+                f'<br>' \
+                f'<a href=/>Volver</a>'
     return html_code
 
 
@@ -51,41 +57,12 @@ def graficas():
 
     # Segundo apartado
 
-    def time_type_incident():
-        # Conectar a la base de datos SQLite
-        con = sqlite3.connect('../docs/datos.db')
-
-        # Leer los datos de la tabla "tickets_emitidos"
-        df = pd.read_sql_query("SELECT * FROM tickets_emitidos", con)
-        con.close()  # Cerrar conexión
-
-        # Asegurar que las fechas sean tipo datetime
-        df["fecha_apertura"] = pd.to_datetime(df["fecha_apertura"])
-        df["fecha_cierre"] = pd.to_datetime(df["fecha_cierre"])
-
-        # Filtrar filas con valores nulos para evitar errores
-        df = df.dropna(subset=["fecha_apertura", "fecha_cierre"])
-
-        # Lista de tipos de incidente únicos
-        type_list = df["tipo_incidencia"].unique().tolist()
-
-        # Lista para almacenar los tiempos de resolución
-        data = []
-
-        # Calcular la diferencia entre fecha_apertura y fecha_cierre por tipo de incidente
-        for tipo in type_list:
-            tiempos_resolucion = (df.loc[df["tipo_incidencia"] == tipo, "fecha_cierre"] -
-                                  df.loc[df["tipo_incidencia"] == tipo, "fecha_apertura"]).dt.days
-            for tiempo in tiempos_resolucion:
-                data.append({"Tipo de Incidente": tipo, "Tiempo de Resolución (días)": tiempo})
-
-        return pd.DataFrame(data)
 
     # Obtener los datos en formato DataFrame
-    df_plot = time_type_incident()
+    df_plot = stats.time_type_incident()
 
     # Crear gráfico de boxplot con Plotly
-    fig = px.box(
+    fig2 = px.box(
         df_plot,
         x="Tipo de Incidente",
         y="Tiempo de Resolución (días)",
@@ -98,17 +75,19 @@ def graficas():
 
     # Agregar líneas para los percentiles 5% y 90%
     for tipo in df_plot["Tipo de Incidente"].unique():
-        fig.add_hline(y=percentiles.loc[tipo, 0.05], line_dash="dot", line_color="red",
+        fig2.add_hline(y=percentiles.loc[tipo, 0.05], line_dash="dot", line_color="red",
                       annotation_text=f"5% - Tipo {tipo}")
-        fig.add_hline(y=percentiles.loc[tipo, 0.90], line_dash="dot", line_color="blue",
+        fig2.add_hline(y=percentiles.loc[tipo, 0.90], line_dash="dot", line_color="blue",
                       annotation_text=f"90% - Tipo {tipo}")
+    graph2 = json.dumps(fig2, cls=a)
 
-    # Mostrar gráfico
-    fig.show()
 
     # Tercer apartado
     values_3 = stats.top5Critics()
-    fig3 = px.bar(values_3, title="5 clientes más críticos")
+    fig3 = go.Figure(
+        data=[go.Bar(y=values_3.values, x=values_3.keys().values)],
+        layout_title_text="5 clientes más críticos",
+    )
     fig3.update_layout(
         xaxis_title="Nombre",
         yaxis_title="Número de incidentes"
@@ -117,7 +96,10 @@ def graficas():
 
     # Cuarto apartado
     values_4 = stats.showEmployees()
-    fig4 = px.bar(values_4, title="Usuarios con las acciones realizadas por los empleados")
+    fig4 = go.Figure(
+        data=[go.Bar(y=values_4.values, x=values_4.keys().values)],
+        layout_title_text="Usuarios con las acciones realizadas por los empleados",
+    )
     fig4.update_layout(
         xaxis_title="Nombre de los usuarios",
         yaxis_title="Número de acciones realizadas por los empleados"
@@ -127,7 +109,12 @@ def graficas():
 
     # Quinto apartado
     results_week_day = stats.week_day()
-    fig5 = plotly.plot(results_week_day, "bar")
+    fig5 = go.Figure(
+        data=[go.Bar(y=[results_week_day[2], results_week_day[4], results_week_day[5], results_week_day[6], results_week_day[0],
+                        results_week_day[1], results_week_day[3]],
+        x=["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])],
+
+    )
 
     fig5.update_layout(title=dict(
         text="Número de actuaciones por día de la semana"
@@ -145,6 +132,7 @@ def graficas():
     )
 
     graph5 = json.dumps(fig5, cls=a)
-    return render_template('hello.html', graph1=graph1, graph3=graph3, graph4=graph4,graph5=graph5)
+    return render_template('hello.html', graph1=graph1,
+                           graph2=graph2, graph3=graph3, graph4=graph4,graph5=graph5)
 if __name__ == '__main__':
     app.run(debug = True)

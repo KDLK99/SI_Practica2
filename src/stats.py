@@ -24,6 +24,7 @@ def showEmployees():
     df = pd.read_sql_query("SELECT nombre FROM empleados e JOIN tickets_empleados t ON e.id_emp = t.id_emp", con)
     return df["nombre"].value_counts()
 
+'''
 def time_type_incident():
     con = sqlite3.connect('../docs/datos.db')
     df = pd.read_sql_query("SELECT * FROM tickets_emitidos", con)
@@ -38,6 +39,37 @@ def time_type_incident():
         datos.append((abs(apertura_tipo_incidente-cierre_tipo_incidente)))
 
     return (datos, type_list)
+'''
+
+def time_type_incident():
+    # Conectar a la base de datos SQLite
+    con = sqlite3.connect('../docs/datos.db')
+
+    # Leer los datos de la tabla "tickets_emitidos"
+    df = pd.read_sql_query("SELECT * FROM tickets_emitidos", con)
+    con.close()  # Cerrar conexión
+
+    # Asegurar que las fechas sean tipo datetime
+    df["fecha_apertura"] = pd.to_datetime(df["fecha_apertura"])
+    df["fecha_cierre"] = pd.to_datetime(df["fecha_cierre"])
+
+    # Filtrar filas con valores nulos para evitar errores
+    df = df.dropna(subset=["fecha_apertura", "fecha_cierre"])
+
+    # Lista de tipos de incidente únicos
+    type_list = df["tipo_incidencia"].unique().tolist()
+
+    # Lista para almacenar los tiempos de resolución
+    data = []
+
+    # Calcular la diferencia entre fecha_apertura y fecha_cierre por tipo de incidente
+    for tipo in type_list:
+        tiempos_resolucion = (df.loc[df["tipo_incidencia"] == tipo, "fecha_cierre"] -
+                              df.loc[df["tipo_incidencia"] == tipo, "fecha_apertura"]).dt.days
+        for tiempo in tiempos_resolucion:
+            data.append({"Tipo de Incidente": tipo, "Tiempo de Resolución (días)": tiempo})
+
+    return pd.DataFrame(data)
 
 def week_day():
     con = sqlite3.connect('../docs/datos.db')
