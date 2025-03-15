@@ -878,7 +878,7 @@
     {
       "cliente": "2",
       "fecha_apertura": "2025-02-11",
-      "fecha_cierre": "2025-02-15",
+      "fecha_cierre": "2025-02-17",
       "es_mantenimiento": false,
       "satisfaccion_cliente": 4,
       "tipo_incidencia": 5,
@@ -1023,7 +1023,7 @@
     {
       "cliente": "8",
       "fecha_apertura": "2025-02-17",
-      "fecha_cierre": "2025-02-21",
+      "fecha_cierre": "2025-02-19",
       "es_mantenimiento": false,
       "satisfaccion_cliente": 6,
       "tipo_incidencia": 1,
@@ -1193,7 +1193,7 @@
     {
       "cliente": "6",
       "fecha_apertura": "2025-02-25",
-      "fecha_cierre": "2025-03-01",
+      "fecha_cierre": "2025-03-07",
       "es_mantenimiento": false,
       "satisfaccion_cliente": 5,
       "tipo_incidencia": 5,
@@ -1353,7 +1353,7 @@
     {
       "cliente": "3",
       "fecha_apertura": "2025-03-04",
-      "fecha_cierre": "2025-03-08",
+      "fecha_cierre": "2025-04-08",
       "es_mantenimiento": true,
       "satisfaccion_cliente": 8,
       "tipo_incidencia": 1,
@@ -1653,7 +1653,7 @@
     {
       "cliente": "6",
       "fecha_apertura": "2025-03-17",
-      "fecha_cierre": "2025-03-21",
+      "fecha_cierre": "2025-03-22",
       "es_mantenimiento": false,
       "satisfaccion_cliente": 5,
       "tipo_incidencia": 1,

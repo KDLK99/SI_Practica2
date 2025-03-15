@@ -34,7 +34,7 @@ def ejercicio2():
     return html_code
 
 
-@app.route('/foto_pies')
+@app.route('/graficas')
 def graficas():
     a = plotly.utils.PlotlyJSONEncoder
     # Primer apartado
