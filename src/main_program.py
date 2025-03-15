@@ -75,7 +75,7 @@ def fill_table_tickets_emitidos(cur:sqlite3.Cursor, data):
     for elem in data:
         cur.execute("INSERT OR IGNORE INTO tickets_emitidos(cliente,fecha_apertura,fecha_cierre,es_mantenimiento,satisfaccion_cliente,tipo_incidencia)"\
                     "VALUES ('%d','%s','%s','%d','%d','%d')" %
-                    (int(elem['cliente']), elem['fecha_apertura'], elem['contactos_con_empleados'][-1]['fecha'], elem['es_mantenimiento'], elem['satisfaccion_cliente'], elem['tipo_incidencia']))
+                    (int(elem['cliente']), elem['fecha_apertura'], elem['fecha_cierre'], elem['es_mantenimiento'], elem['satisfaccion_cliente'], elem['tipo_incidencia']))
 
 def create_table_tickets_empleados(cur:sqlite3.Cursor):
     cur.execute("DROP TABLE IF EXISTS tickets_empleados;")
@@ -248,7 +248,22 @@ def calc_values2():
     print("Número de incidentes por empleado:")
     print(df_empleados2)
 
-    #df_empleados3 = 
+    
+    print("Mediana de número de incidentes por empleado: ", end="")
+    df_empleados3 = df_empleados2['n_tickets'].median()
+    print(df_empleados3)
+    print("Media de número de incidentes por empleado: ", end="")
+    df_empleados3 = df_empleados2['n_tickets'].mean()
+    print(df_empleados3)
+    print("Varianza de número de incidentes por empleado: ", end="")
+    df_empleados3 = df_empleados2['n_tickets'].var()
+    print(df_empleados3)
+    print("Mayor valor de número de incidentes por empleado: ", end="")
+    df_empleados3 = df_empleados2['n_tickets'].max()
+    print(df_empleados3)
+    print("Menor valor de número de incidentes por empleado: ", end="")
+    df_empleados3 = df_empleados2['n_tickets'].min()
+    print(df_empleados3)
 
 
 
@@ -263,6 +278,22 @@ def calc_values2():
     print("Número de incidentes por nivel:")
     print(df_nivel2)
 
+    print("Mediana de número de incidentes por nivel: ", end="")
+    df_nivel3 = df_nivel2['n_tickets'].median()
+    print(df_nivel3)
+    print("Media de número de incidentes por nivel: ", end="")
+    df_nivel3 = df_nivel2['n_tickets'].mean()
+    print(df_nivel3)
+    print("Varianza de número de incidentes por nivel: ", end="")
+    df_nivel3 = df_nivel2['n_tickets'].var()
+    print(df_nivel3)
+    print("Mayor valor de número de incidentes por nivel: ", end="")
+    df_nivel3 = df_nivel2['n_tickets'].max()
+    print(df_nivel3)
+    print("Menor valor de número de incidentes por nivel: ", end="")
+    df_nivel3 = df_nivel2['n_tickets'].min()
+    print(df_nivel3)
+
 
     ## Cliente ##
     print("\n-- Cliente --\n")
@@ -273,6 +304,21 @@ def calc_values2():
     print("Número de incidentes por cliente:")
     print(df_cliente2)
 
+    print("Mediana de número de incidentes por cliente: ", end="")
+    df_cliente3 = df_cliente2['n_tickets'].median()
+    print(df_cliente3)
+    print("Media de número de incidentes por cliente: ", end="")
+    df_cliente3 = df_cliente2['n_tickets'].mean()
+    print(df_cliente3)
+    print("Varianza de número de incidentes por cliente: ", end="")
+    df_cliente3 = df_cliente2['n_tickets'].var()
+    print(df_cliente3)
+    print("Mayor valor de número de incidentes por cliente: ", end="")
+    df_cliente3 = df_cliente2['n_tickets'].max()
+    print(df_cliente3)
+    print("Menor valor de número de incidentes por cliente: ", end="")
+    df_cliente3 = df_cliente2['n_tickets'].min()
+    print(df_cliente3)
 
     ## Tipo de incidente ##
 
