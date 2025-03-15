@@ -322,7 +322,60 @@ def calc_values2():
 
     ## Tipo de incidente ##
 
+    print("\n-- Tipo de incidente --\n")
+    df_tincidente = df.groupby("tipo_incidencia")
+
+    df_tincidente2 = df_tincidente['id_tick'].count().reset_index()
+    df_tincidente2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
+    print("Número de incidentes por cliente:")
+    print(df_tincidente2)
+
+    print("Mediana de número de incidentes por tipo de incidente: ", end="")
+    df_tincidente3 = df_tincidente2['n_tickets'].median()
+    print(df_tincidente3)
+    print("Media de número de incidentes por tipo de incidente: ", end="")
+    df_tincidente3 = df_tincidente2['n_tickets'].mean()
+    print(df_tincidente3)
+    print("Varianza de número de incidentes por tipo de incidente: ", end="")
+    df_tincidente3 = df_tincidente2['n_tickets'].var()
+    print(df_tincidente3)
+    print("Mayor valor de número de incidentes por tipo de incidente: ", end="")
+    df_tincidente3 = df_tincidente2['n_tickets'].max()
+    print(df_tincidente3)
+    print("Menor valor de número de incidentes por tipo de incidente: ", end="")
+    df_tincidente3 = df_tincidente2['n_tickets'].min()
+    print(df_tincidente3)
+
+
     ## Dia de la semana ##
+
+    print("\n-- Día de la semana --\n")
+
+    df['fecha'] = pd.to_datetime(df['fecha'])
+    df['dia_semana'] = df['fecha'].dt.day_name()
+    df_diasemana = df.groupby("dia_semana")
+
+    df_diasemana2 = df_diasemana['id_tick'].count().reset_index()
+    df_diasemana2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
+    print("Número de incidentes por cliente:")
+    print(df_diasemana2)
+
+    print("Mediana de número de incidentes por tipo de incidente: ", end="")
+    df_diasemana3 = df_diasemana2['n_tickets'].median()
+    print(df_diasemana3)
+    print("Media de número de incidentes por tipo de incidente: ", end="")
+    df_diasemana3 = df_diasemana2['n_tickets'].mean()
+    print(df_diasemana3)
+    print("Varianza de número de incidentes por tipo de incidente: ", end="")
+    df_diasemana3 = df_diasemana2['n_tickets'].var()
+    print(df_diasemana3)
+    print("Mayor valor de número de incidentes por tipo de incidente: ", end="")
+    df_diasemana3 = df_diasemana2['n_tickets'].max()
+    print(df_diasemana3)
+    print("Menor valor de número de incidentes por tipo de incidente: ", end="")
+    df_diasemana3 = df_diasemana2['n_tickets'].min()
+    print(df_diasemana3)
+
 
 
 def main():
