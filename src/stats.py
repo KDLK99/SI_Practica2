@@ -76,5 +76,3 @@ def week_day():
     con.close()
 
     return final_data
-
-print(week_day())
