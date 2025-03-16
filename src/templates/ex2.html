@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes de Incidentes</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+	<p><b>Número de tickets emitidos (muestras):</b> {{ result1 }}</p>
+	<p><b>Media de los incidentes con valoración mayor de 5:</b> {{ result2 }}</p>
+	<p><b>Desviación típica de los incidentes con valoración mayor de 5:</b> {{ result3 }}</p>
+	<p><b>Media del número de incidentes por cliente:</b> {{ result4 }}</p>
+	<p><b>Desviación típica del número de incidentes por cliente:</b> {{ result5 }}</p>
+	<p><b>Media del número de horas por incidente:</b> {{ result6 }}</p>
+	<p><b>Desviación típica de las horas por incidente:</b> {{ result7 }}</p>
+	<p><b>Empleado con más horas trabajadas:</b> {{ result8 }} ({{ result9 }} horas)</p>
+	<p><b>Empleado con menos horas trabajadas:</b> {{ result10 }} ({{ result11 }} horas)</p>
+	<p><b>Diferencia mínima:</b> {{ result12 }} días</p>
+	<p><b>Diferencia máxima:</b> {{ result13 }} días</p>
+	<p><b>Empleado con más tickets:</b> {{ result14 }} ({{ result15 }} veces)</p>
+	<p><b>Empleado con menos tickets:</b> {{ result16 }} ({{ result17 }} veces)</p>
+	<br>
+	<br>
+	<a href=/>Volver</a>
+</body>
+</html>

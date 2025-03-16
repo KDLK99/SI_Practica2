@@ -22,23 +22,24 @@ def hello_world():
 @app.route('/ejercicio_2')
 def ejercicio2():
     results = main_program.calc_values()
-    html_code = f'<p><b>Número de tickets emitidos (muestras):</b> {results[0]}</p>' \
-                f'<p><b>Media de los incidentes con valoración mayor de 5:</b> {results[1]:.2f}</p>' \
-                f'<p><b>Desviación típica de los incidentes con valoración mayor de 5:</b> {results[2]:.2f}</p>' \
-                f'<p><b>Media del número de incidentes por cliente:</b> {results[3]}</p>' \
-                f'<p><b>Desviación típica del número de incidentes por cliente:</b> {results[4]:.2f}</p>' \
-                f'<p><b>Media del número de horas por incidente:</b> {results[5]}</p>' \
-                f'<p><b>Desviación típica de las horas por incidente:</b> {results[6]:.2f}</p>' \
-                f'<p><b>Empleado con más horas trabajadas:</b> {results[7][0]} ({results[7][1]} horas)</p>' \
-                f'<p><b>Empleado con menos horas trabajadas:</b> {results[8][0]} ({results[8][1]} horas)</p>' \
-                f'<p><b>Diferencia mínima:</b> {results[9]} días</p>' \
-                f'<p><b>Diferencia máxima:</b> {results[10]} días</p>' \
-                f'<p><b>Empleado con más tickets:</b> {results[11][0]} ({results[11][1]} veces)</p>' \
-                f'<p><b>Empleado con menos tickets:</b> {results[12][0]} ({results[12][1]} veces)</p>' \
-                f'<br>' \
-                f'<br>' \
-                f'<a href=/>Volver</a>'
-    return html_code
+    return render_template('ex2.html',
+                        result1=results[0],
+                        result2=results[1],
+                        result3=results[2],
+                        result4=results[3],
+                        result5=results[4],
+                        result6=results[5],
+                        result7=results[6],
+                        result8=results[7][0],
+                        result9=results[7][1],
+                        result10=results[8][0],
+                        result11=results[8][1],
+                        result12=results[9],
+                        result13=results[10],
+                        result14=results[11][0],
+                        result15=results[11][1],
+                        result16=results[12][0],
+                        result17=results[12][1])
 
 @app.route('/ejercicio_3')
 def ejercicio3():
