@@ -77,6 +77,5 @@ def week_day():
 
     final_data = final_data.reindex(order_of_days)
     con.close()
-    print(final_data)
 
     return final_data
