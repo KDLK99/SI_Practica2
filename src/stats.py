@@ -70,9 +70,13 @@ def week_day():
     df = pd.read_sql_query("SELECT * FROM tickets_emitidos", con)
 
     days = pd.to_datetime(df['fecha_apertura']).dt.day_name()
-
+    
     final_data = days.value_counts()
+    order_of_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
+
+    final_data = final_data.reindex(order_of_days)
     con.close()
+    print(final_data)
 
     return final_data

@@ -135,7 +135,7 @@ def graficas():
     values_4 = stats.showEmployees()
     fig4 = go.Figure(
         data=[go.Bar(y=list(values_4.values), x=list(values_4.keys().values))],
-        layout_title_text="Usuarios con las acciones realizadas por los empleados",
+        layout_title_text="Usuarios con más acciones realizadas por los empleados",
     )
     fig4.update_layout(
         xaxis_title="Nombre de los usuarios",
@@ -147,10 +147,9 @@ def graficas():
     # Quinto apartado
     results_week_day = stats.week_day()
     fig5 = go.Figure(
-        data=[go.Bar(y=[results_week_day[2], results_week_day[4], results_week_day[5], results_week_day[6], results_week_day[0],
-                        results_week_day[1], results_week_day[3]],
+        data=[go.Bar(y=[results_week_day.iloc[0], results_week_day.iloc[1], results_week_day.iloc[2], results_week_day.iloc[3], results_week_day.iloc[4],
+                        results_week_day.iloc[5], results_week_day.iloc[6]],
         x=["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])],
-
     )
 
     fig5.update_layout(title=dict(
@@ -169,6 +168,8 @@ def graficas():
     )
 
     graph5 = json.dumps(fig5, cls=a)
-    return render_template('hello.html', graph1=graph1,graph2=graph2, graph3=graph3, graph4=graph4,graph5=graph5)
+    return render_template('ex4.html', graph1=graph1,graph2=graph2, graph3=graph3, graph4=graph4,graph5=graph5)
+
 if __name__ == '__main__':
+    main_program.main()
     app.run(debug = True)
