@@ -237,7 +237,7 @@ def calc_values2():
     print("\n----- EJERCICIO 3 -----\n")
     con = sqlite3.connect('../docs/datos.db')
     df = pd.read_sql_query("SELECT e.id_emp, e.nombre, e.nivel, t.cliente, te.fecha, te.tiempo, t.id_tick, t.fecha_apertura, t.fecha_cierre, t.es_mantenimiento, t.satisfaccion_cliente, t.tipo_incidencia FROM empleados e JOIN tickets_empleados te ON e.id_emp = te.id_emp JOIN tickets_emitidos t ON te.id_ticket = t.id_tick;", con)
-    df = df[df.tipo_incidencia == 5]
+    df = df[df.tipo_incidencia == 5] #Solo trabajamos con el tipo "Fraude" (5)
     
     ## Empleado ##
     print("\n-- Empleados --\n")
@@ -246,9 +246,16 @@ def calc_values2():
     df_empleados2 = df_empleados['id_tick'].count().reset_index()
     df_empleados2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
     print("Número de incidentes por empleado:")
-    print(df_empleados2)
+    print(df_empleados2.to_string(index=False))
 
-    
+    df_empleados4 = pd.DataFrame(columns=['id_emp', 'num_emp_by_ticket'])
+    for empleado_id, grupo in df_empleados:
+        emp_tid = df[df['id_tick'].isin(grupo['id_tick'])]['id_emp'].count()
+        new_df = pd.DataFrame([(empleado_id, emp_tid)], columns=['id_emp', 'num_emp_by_ticket'])
+        df_empleados4 = pd.concat([df_empleados4, new_df], ignore_index=True)
+    print("Número de contactos por cada ticket de cada empleado:")
+    print(df_empleados4.to_string(index=False))
+
     print("Mediana de número de incidentes por empleado: ", end="")
     df_empleados3 = df_empleados2['n_tickets'].median()
     print(df_empleados3)
@@ -276,7 +283,15 @@ def calc_values2():
     df_nivel2 = df_nivel['id_tick'].count().reset_index()
     df_nivel2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
     print("Número de incidentes por nivel:")
-    print(df_nivel2)
+    print(df_nivel2.to_string(index=False))
+
+    df_nivel4 = pd.DataFrame(columns=['id_emp', 'num_emp_by_ticket'])
+    for nivel_id, grupo in df_nivel:
+        emp_tid = df[df['id_tick'].isin(grupo['id_tick'])]['id_emp'].count()
+        new_df = pd.DataFrame([(nivel_id, emp_tid)], columns=['id_emp', 'num_emp_by_ticket'])
+        df_nivel4 = pd.concat([df_nivel4, new_df], ignore_index=True)
+    print("Número de contactos por cada ticket de cada nivel:")
+    print(df_nivel4.to_string(index=False))
 
     print("Mediana de número de incidentes por nivel: ", end="")
     df_nivel3 = df_nivel2['n_tickets'].median()
@@ -302,7 +317,15 @@ def calc_values2():
     df_cliente2 = df_cliente['id_tick'].count().reset_index()
     df_cliente2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
     print("Número de incidentes por cliente:")
-    print(df_cliente2)
+    print(df_cliente2.to_string(index=False))
+
+    df_cliente4 = pd.DataFrame(columns=['id_emp', 'num_emp_by_ticket'])
+    for client_id, grupo in df_cliente:
+        emp_tid = df[df['id_tick'].isin(grupo['id_tick'])]['id_emp'].count()
+        new_df = pd.DataFrame([(client_id, emp_tid)], columns=['id_emp', 'num_emp_by_ticket'])
+        df_cliente4 = pd.concat([df_cliente4, new_df], ignore_index=True)
+    print("Número de contactos por cada ticket de cada cliente:")
+    print(df_cliente4.to_string(index=False))
 
     print("Mediana de número de incidentes por cliente: ", end="")
     df_cliente3 = df_cliente2['n_tickets'].median()
@@ -328,7 +351,15 @@ def calc_values2():
     df_tincidente2 = df_tincidente['id_tick'].count().reset_index()
     df_tincidente2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
     print("Número de incidentes por cliente:")
-    print(df_tincidente2)
+    print(df_tincidente2.to_string(index=False))
+
+    df_tincidente4 = pd.DataFrame(columns=['id_emp', 'num_emp_by_ticket'])
+    for tincidente_id, grupo in df_tincidente:
+        emp_tid = df[df['id_tick'].isin(grupo['id_tick'])]['id_emp'].count()
+        new_df = pd.DataFrame([(tincidente_id, emp_tid)], columns=['id_emp', 'num_emp_by_ticket'])
+        df_tincidente4 = pd.concat([df_tincidente4, new_df], ignore_index=True)
+    print("Número de contactos por cada ticket de cada tipo de incidente:")
+    print(df_tincidente4.to_string(index=False))
 
     print("Mediana de número de incidentes por tipo de incidente: ", end="")
     df_tincidente3 = df_tincidente2['n_tickets'].median()
@@ -358,7 +389,15 @@ def calc_values2():
     df_diasemana2 = df_diasemana['id_tick'].count().reset_index()
     df_diasemana2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
     print("Número de incidentes por cliente:")
-    print(df_diasemana2)
+    print(df_diasemana2.to_string(index=False))
+
+    df_diasemana4 = pd.DataFrame(columns=['id_emp', 'num_emp_by_ticket'])
+    for diasemana_id, grupo in df_diasemana:
+        emp_tid = df[df['id_tick'].isin(grupo['id_tick'])]['id_emp'].count()
+        new_df = pd.DataFrame([(diasemana_id, emp_tid)], columns=['id_emp', 'num_emp_by_ticket'])
+        df_diasemana4 = pd.concat([df_diasemana4, new_df], ignore_index=True)
+    print("Número de contactos por cada ticket de cada día de la semana:")
+    print(df_diasemana4.to_string(index=False))
 
     print("Mediana de número de incidentes por tipo de incidente: ", end="")
     df_diasemana3 = df_diasemana2['n_tickets'].median()
