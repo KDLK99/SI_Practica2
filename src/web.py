@@ -15,6 +15,8 @@ app = Flask(__name__)
 def hello_world():
     return '<h2>Inicio</h2>' \
            '<a href=/ejercicio_2>Ejercicio 2</a>' \
+            '<br>' \
+           '<a href=/ejercicio_3>Ejercicio 3</a>' \
            '<br>' \
            '<a href=/ejercicio_4>Ejercicio 4</a>'
 
@@ -38,6 +40,24 @@ def ejercicio2():
                 f'<br>' \
                 f'<a href=/>Volver</a>'
     return html_code
+
+@app.route('/ejercicio_3')
+def ejercicio3():
+    results = main_program.calc_values2()
+    return render_template('ex3.html', empleado_1=results[0].to_html(classes='data', header="true", index=False),
+                        empleado_2=results[1].to_html(classes='data', header="true", index=False),
+                        empleado_3=results[2],
+                        empleado_4=results[3],
+                        empleado_5=results[4],
+                        empleado_6=results[5],
+                        empleado_7=results[6],
+                        nivel_1=results[7].to_html(classes='data', header="true", index=False),
+                        nivel_2=results[8].to_html(classes='data', header="true", index=False),
+                        nivel_3=results[9],
+                        nivel_4=results[10],
+                        nivel_5=results[11],
+                        nivel_6=results[12],
+                        nivel_7=results[13],)
 
 
 @app.route('/ejercicio_4')

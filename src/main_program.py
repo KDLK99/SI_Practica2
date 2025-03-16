@@ -238,7 +238,8 @@ def calc_values2():
     con = sqlite3.connect('../docs/datos.db')
     df = pd.read_sql_query("SELECT e.id_emp, e.nombre, e.nivel, t.cliente, te.fecha, te.tiempo, t.id_tick, t.fecha_apertura, t.fecha_cierre, t.es_mantenimiento, t.satisfaccion_cliente, t.tipo_incidencia FROM empleados e JOIN tickets_empleados te ON e.id_emp = te.id_emp JOIN tickets_emitidos t ON te.id_ticket = t.id_tick;", con)
     df = df[df.tipo_incidencia == 5] #Solo trabajamos con el tipo "Fraude" (5)
-    
+    results = [] #Variable en la que se guardarán los resultados para la web
+
     ## Empleado ##
     print("\n-- Empleados --\n")
     df_empleados = df.groupby("id_emp")
@@ -247,6 +248,7 @@ def calc_values2():
     df_empleados2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
     print("Número de incidentes por empleado:")
     print(df_empleados2.to_string(index=False))
+    results.append(df_empleados2)
 
     df_empleados4 = pd.DataFrame(columns=['id_emp', 'num_emp_by_ticket'])
     for empleado_id, grupo in df_empleados:
@@ -255,28 +257,31 @@ def calc_values2():
         df_empleados4 = pd.concat([df_empleados4, new_df], ignore_index=True)
     print("Número de contactos por cada ticket de cada empleado:")
     print(df_empleados4.to_string(index=False))
+    results.append(df_empleados4)
 
     print("Mediana de número de incidentes por empleado: ", end="")
     df_empleados3 = df_empleados2['n_tickets'].median()
     print(df_empleados3)
+    results.append(df_empleados3)
     print("Media de número de incidentes por empleado: ", end="")
     df_empleados3 = df_empleados2['n_tickets'].mean()
     print(df_empleados3)
+    results.append(df_empleados3)
     print("Varianza de número de incidentes por empleado: ", end="")
     df_empleados3 = df_empleados2['n_tickets'].var()
     print(df_empleados3)
+    results.append(df_empleados3)
     print("Mayor valor de número de incidentes por empleado: ", end="")
     df_empleados3 = df_empleados2['n_tickets'].max()
     print(df_empleados3)
+    results.append(df_empleados3)
     print("Menor valor de número de incidentes por empleado: ", end="")
     df_empleados3 = df_empleados2['n_tickets'].min()
     print(df_empleados3)
+    results.append(df_empleados3)
 
 
-
-
-
-    ## Nivel de empleado ##
+    ## Nivel ##
     print("\n-- Nivel --\n")
     df_nivel = df.groupby("nivel")
 
@@ -284,31 +289,41 @@ def calc_values2():
     df_nivel2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
     print("Número de incidentes por nivel:")
     print(df_nivel2.to_string(index=False))
+    results.append(df_nivel2)
 
     df_nivel4 = pd.DataFrame(columns=['id_emp', 'num_emp_by_ticket'])
     for nivel_id, grupo in df_nivel:
         emp_tid = df[df['id_tick'].isin(grupo['id_tick'])]['id_emp'].count()
         new_df = pd.DataFrame([(nivel_id, emp_tid)], columns=['id_emp', 'num_emp_by_ticket'])
         df_nivel4 = pd.concat([df_nivel4, new_df], ignore_index=True)
+    df_nivel4.rename(columns={'id_emp': 'nivel'}, inplace=True)
     print("Número de contactos por cada ticket de cada nivel:")
     print(df_nivel4.to_string(index=False))
+    results.append(df_nivel4)
 
     print("Mediana de número de incidentes por nivel: ", end="")
     df_nivel3 = df_nivel2['n_tickets'].median()
     print(df_nivel3)
+    results.append(df_nivel3)
     print("Media de número de incidentes por nivel: ", end="")
     df_nivel3 = df_nivel2['n_tickets'].mean()
     print(df_nivel3)
+    results.append(df_nivel3)
     print("Varianza de número de incidentes por nivel: ", end="")
     df_nivel3 = df_nivel2['n_tickets'].var()
     print(df_nivel3)
+    results.append(df_nivel3)
     print("Mayor valor de número de incidentes por nivel: ", end="")
     df_nivel3 = df_nivel2['n_tickets'].max()
     print(df_nivel3)
+    results.append(df_nivel3)
     print("Menor valor de número de incidentes por nivel: ", end="")
     df_nivel3 = df_nivel2['n_tickets'].min()
     print(df_nivel3)
+    results.append(df_nivel3)
 
+
+    return results
 
     ## Cliente ##
     print("\n-- Cliente --\n")
@@ -398,6 +413,7 @@ def calc_values2():
         df_diasemana4 = pd.concat([df_diasemana4, new_df], ignore_index=True)
     print("Número de contactos por cada ticket de cada día de la semana:")
     print(df_diasemana4.to_string(index=False))
+    return df_diasemana4
 
     print("Mediana de número de incidentes por tipo de incidente: ", end="")
     df_diasemana3 = df_diasemana2['n_tickets'].median()
