@@ -1,4 +1,4 @@
 pandas
 openpyxl
 flask
-plotly
+plotly==5.18.0

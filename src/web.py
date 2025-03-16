@@ -3,12 +3,11 @@ from flask import Flask
 import plotly.graph_objects as go
 import plotly
 from flask import render_template
-from flask import request
 import json
 import main_program
 import stats
 import plotly.express as px
-import sqlite3
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -97,32 +96,27 @@ def graficas():
     graph1 = json.dumps(fig1, cls=a)
 
     # Segundo apartado
-
-
-    # Obtener los datos en formato DataFrame
     df_plot = stats.time_type_incident()
 
-    # Crear gráfico de boxplot con Plotly
-    fig2 = px.box(
-        df_plot,
-        x="Tipo de Incidente",
-        y="Tiempo de Resolución (días)",
-        points="outliers",  # Mostrar valores atípicos
-        title="Distribución de tiempos de resolución por tipo de incidente"
-    )
+    fig2 = px.box(df_plot, x=df_plot.iloc[:, 0], y=df_plot.iloc[:, 1])
 
-    # Calcular percentiles 5% y 90%
+    fig2.update_layout(
+        title=dict(
+            text="Número de actuaciones por día de la semana"
+        ),
+        xaxis_title="Tipo incidencia",
+        yaxis_title="Tiempos de resolución",
+
+    )
     percentiles = df_plot.groupby("Tipo de Incidente")["Tiempo de Resolución (días)"].quantile([0.05, 0.90]).unstack()
 
     # Agregar líneas para los percentiles 5% y 90%
     for tipo in df_plot["Tipo de Incidente"].unique():
         fig2.add_hline(y=percentiles.loc[tipo, 0.05], line_dash="dot", line_color="red",
-                      annotation_text=f"5% - Tipo {tipo}")
+                       annotation_text=f"5% - Tipo {tipo}")
         fig2.add_hline(y=percentiles.loc[tipo, 0.90], line_dash="dot", line_color="blue",
-                      annotation_text=f"90% - Tipo {tipo}")
-    fig2.show()
+                       annotation_text=f"90% - Tipo {tipo}")
     graph2 = json.dumps(fig2, cls=a)
-    graph2 = fig2.to_json()
 
     # Tercer apartado
     values_3 = stats.top5Critics()
@@ -174,7 +168,6 @@ def graficas():
     )
 
     graph5 = json.dumps(fig5, cls=a)
-    return render_template('hello.html', graph1=graph1,
-                           graph2=graph2, graph3=graph3, graph4=graph4,graph5=graph5)
+    return render_template('hello.html', graph1=graph1,graph2=graph2, graph3=graph3, graph4=graph4,graph5=graph5)
 if __name__ == '__main__':
     app.run(debug = True)
