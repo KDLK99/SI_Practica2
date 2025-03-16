@@ -47,5 +47,43 @@
     <p>Mayor valor de número de incidentes por nivel: {{ nivel_6 }}</p>
     <p>Menor valor de número de incidentes por nivel: {{ nivel_7 }}</p>
 
+    <hr>
+    <h1>Estadisticas por cliente</h1>
+    <hr>
+    <h3>Numero de incidentes por cliente:</h3>
+    {{ cliente_1|safe }}
+    <h3>Número de contactos por cada ticket de cada cliente:</h3>
+    {{ cliente_2|safe }}
+    <p>Mediana de número de incidentes por cliente: {{ cliente_3 }}</p>
+    <p>Media de número de incidentes por cliente: {{ cliente_4 }}</p>
+    <p>Varianza de número de incidentes por cliente: {{ cliente_5 }}</p>
+    <p>Mayor valor de número de incidentes por cliente: {{ cliente_6 }}</p>
+    <p>Menor valor de número de incidentes por cliente: {{ cliente_7 }}</p>
+
+    <hr>
+    <h1>Estadisticas por tipo de incidente</h1>
+    <hr>
+    <h3>Numero de incidentes por tipo de incidente:</h3>
+    {{ tipo_de_incidente_1|safe }}
+    <h3>Número de contactos por cada ticket de cada tipo de incidente:</h3>
+    {{ tipo_de_incidente_2|safe }}
+    <p>Mediana de número de incidentes por tipo de incidente: {{ tipo_de_incidente_3 }}</p>
+    <p>Media de número de incidentes por tipo de incidente: {{ tipo_de_incidente_4 }}</p>
+    <p>Varianza de número de incidentes por tipo de incidente: {{ tipo_de_incidente_5 }}</p>
+    <p>Mayor valor de número de incidentes por tipo de incidente: {{ tipo_de_incidente_6 }}</p>
+    <p>Menor valor de número de incidentes por tipo de incidente: {{ tipo_de_incidente_7 }}</p>
+
+    <hr>
+    <h1>Estadisticas por día de la semana</h1>
+    <hr>
+    <h3>Numero de incidentes por día de la semana:</h3>
+    {{ dia_de_la_semana_1|safe }}
+    <h3>Número de contactos por cada ticket de cada día de la semana:</h3>
+    {{ dia_de_la_semana_2|safe }}
+    <p>Mediana de número de incidentes por día de la semana: {{ dia_de_la_semana_3 }}</p>
+    <p>Media de número de incidentes por día de la semana: {{ dia_de_la_semana_4 }}</p>
+    <p>Varianza de número de incidentes por día de la semana: {{ dia_de_la_semana_5 }}</p>
+    <p>Mayor valor de número de incidentes por día de la semana: {{ dia_de_la_semana_6 }}</p>
+    <p>Menor valor de número de incidentes por día de la semana: {{ dia_de_la_semana_7 }}</p>
 </body>
 </html>

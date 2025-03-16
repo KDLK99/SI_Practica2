@@ -57,7 +57,28 @@ def ejercicio3():
                         nivel_4=results[10],
                         nivel_5=results[11],
                         nivel_6=results[12],
-                        nivel_7=results[13],)
+                        nivel_7=results[13],
+                        cliente_1=results[14].to_html(classes='data', header="true", index=False),
+                        cliente_2=results[15].to_html(classes='data', header="true", index=False),
+                        cliente_3=results[16],
+                        cliente_4=results[17],
+                        cliente_5=results[18],
+                        cliente_6=results[19],
+                        cliente_7=results[20],
+                        tipo_de_incidente_1=results[21].to_html(classes='data', header="true", index=False),
+                        tipo_de_incidente_2=results[22].to_html(classes='data', header="true", index=False),
+                        tipo_de_incidente_3=results[23],
+                        tipo_de_incidente_4=results[24],
+                        tipo_de_incidente_5=results[25],
+                        tipo_de_incidente_6=results[26],
+                        tipo_de_incidente_7=results[27],
+                        dia_de_la_semana_1=results[28].to_html(classes='data', header="true", index=False),
+                        dia_de_la_semana_2=results[29].to_html(classes='data', header="true", index=False),
+                        dia_de_la_semana_3=results[30],
+                        dia_de_la_semana_4=results[31],
+                        dia_de_la_semana_5=results[32],
+                        dia_de_la_semana_6=results[33],
+                        dia_de_la_semana_7=results[34])
 
 
 @app.route('/ejercicio_4')

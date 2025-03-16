@@ -323,8 +323,6 @@ def calc_values2():
     results.append(df_nivel3)
 
 
-    return results
-
     ## Cliente ##
     print("\n-- Cliente --\n")
     df_cliente = df.groupby("cliente")
@@ -333,33 +331,42 @@ def calc_values2():
     df_cliente2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
     print("Número de incidentes por cliente:")
     print(df_cliente2.to_string(index=False))
+    results.append(df_cliente2)
+
 
     df_cliente4 = pd.DataFrame(columns=['id_emp', 'num_emp_by_ticket'])
     for client_id, grupo in df_cliente:
         emp_tid = df[df['id_tick'].isin(grupo['id_tick'])]['id_emp'].count()
         new_df = pd.DataFrame([(client_id, emp_tid)], columns=['id_emp', 'num_emp_by_ticket'])
         df_cliente4 = pd.concat([df_cliente4, new_df], ignore_index=True)
+    df_cliente4.rename(columns={'id_emp': 'cliente'}, inplace=True)
     print("Número de contactos por cada ticket de cada cliente:")
     print(df_cliente4.to_string(index=False))
+    results.append(df_cliente4)
 
     print("Mediana de número de incidentes por cliente: ", end="")
     df_cliente3 = df_cliente2['n_tickets'].median()
     print(df_cliente3)
+    results.append(df_cliente3)
     print("Media de número de incidentes por cliente: ", end="")
     df_cliente3 = df_cliente2['n_tickets'].mean()
     print(df_cliente3)
+    results.append(df_cliente3)
     print("Varianza de número de incidentes por cliente: ", end="")
     df_cliente3 = df_cliente2['n_tickets'].var()
     print(df_cliente3)
+    results.append(df_cliente3)
     print("Mayor valor de número de incidentes por cliente: ", end="")
     df_cliente3 = df_cliente2['n_tickets'].max()
     print(df_cliente3)
+    results.append(df_cliente3)
     print("Menor valor de número de incidentes por cliente: ", end="")
     df_cliente3 = df_cliente2['n_tickets'].min()
     print(df_cliente3)
+    results.append(df_cliente3)
+
 
     ## Tipo de incidente ##
-
     print("\n-- Tipo de incidente --\n")
     df_tincidente = df.groupby("tipo_incidencia")
 
@@ -367,34 +374,41 @@ def calc_values2():
     df_tincidente2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
     print("Número de incidentes por cliente:")
     print(df_tincidente2.to_string(index=False))
+    results.append(df_tincidente2)
 
     df_tincidente4 = pd.DataFrame(columns=['id_emp', 'num_emp_by_ticket'])
     for tincidente_id, grupo in df_tincidente:
         emp_tid = df[df['id_tick'].isin(grupo['id_tick'])]['id_emp'].count()
         new_df = pd.DataFrame([(tincidente_id, emp_tid)], columns=['id_emp', 'num_emp_by_ticket'])
         df_tincidente4 = pd.concat([df_tincidente4, new_df], ignore_index=True)
+    df_tincidente4.rename(columns={'id_emp': 'tipo_incidente'}, inplace=True)
     print("Número de contactos por cada ticket de cada tipo de incidente:")
     print(df_tincidente4.to_string(index=False))
+    results.append(df_tincidente4)
 
     print("Mediana de número de incidentes por tipo de incidente: ", end="")
     df_tincidente3 = df_tincidente2['n_tickets'].median()
     print(df_tincidente3)
+    results.append(df_tincidente3)
     print("Media de número de incidentes por tipo de incidente: ", end="")
     df_tincidente3 = df_tincidente2['n_tickets'].mean()
     print(df_tincidente3)
+    results.append(df_tincidente3)
     print("Varianza de número de incidentes por tipo de incidente: ", end="")
     df_tincidente3 = df_tincidente2['n_tickets'].var()
     print(df_tincidente3)
+    results.append(df_tincidente3)
     print("Mayor valor de número de incidentes por tipo de incidente: ", end="")
     df_tincidente3 = df_tincidente2['n_tickets'].max()
     print(df_tincidente3)
+    results.append(df_tincidente3)
     print("Menor valor de número de incidentes por tipo de incidente: ", end="")
     df_tincidente3 = df_tincidente2['n_tickets'].min()
     print(df_tincidente3)
+    results.append(df_tincidente3)
 
 
     ## Dia de la semana ##
-
     print("\n-- Día de la semana --\n")
 
     df['fecha'] = pd.to_datetime(df['fecha'])
@@ -405,32 +419,40 @@ def calc_values2():
     df_diasemana2.rename(columns={'id_tick': 'n_tickets'}, inplace=True)
     print("Número de incidentes por cliente:")
     print(df_diasemana2.to_string(index=False))
+    results.append(df_diasemana2)
 
     df_diasemana4 = pd.DataFrame(columns=['id_emp', 'num_emp_by_ticket'])
     for diasemana_id, grupo in df_diasemana:
         emp_tid = df[df['id_tick'].isin(grupo['id_tick'])]['id_emp'].count()
         new_df = pd.DataFrame([(diasemana_id, emp_tid)], columns=['id_emp', 'num_emp_by_ticket'])
         df_diasemana4 = pd.concat([df_diasemana4, new_df], ignore_index=True)
+    df_diasemana4.rename(columns={'id_emp': 'dia_semana'}, inplace=True)
     print("Número de contactos por cada ticket de cada día de la semana:")
     print(df_diasemana4.to_string(index=False))
-    return df_diasemana4
+    results.append(df_diasemana4)
 
     print("Mediana de número de incidentes por tipo de incidente: ", end="")
     df_diasemana3 = df_diasemana2['n_tickets'].median()
     print(df_diasemana3)
+    results.append(df_diasemana3)
     print("Media de número de incidentes por tipo de incidente: ", end="")
     df_diasemana3 = df_diasemana2['n_tickets'].mean()
     print(df_diasemana3)
+    results.append(df_diasemana3)
     print("Varianza de número de incidentes por tipo de incidente: ", end="")
     df_diasemana3 = df_diasemana2['n_tickets'].var()
     print(df_diasemana3)
+    results.append(df_diasemana3)
     print("Mayor valor de número de incidentes por tipo de incidente: ", end="")
     df_diasemana3 = df_diasemana2['n_tickets'].max()
     print(df_diasemana3)
+    results.append(df_diasemana3)
     print("Menor valor de número de incidentes por tipo de incidente: ", end="")
     df_diasemana3 = df_diasemana2['n_tickets'].min()
     print(df_diasemana3)
+    results.append(df_diasemana3)
 
+    return results
 
 
 def main():
