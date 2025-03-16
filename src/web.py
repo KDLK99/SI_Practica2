@@ -171,5 +171,5 @@ def graficas():
     return render_template('ex4.html', graph1=graph1,graph2=graph2, graph3=graph3, graph4=graph4,graph5=graph5)
 
 if __name__ == '__main__':
-    main_program.main()
+    main_program.load_data_from_json()
     app.run(debug = True)
