@@ -7,6 +7,7 @@ def get_db_connection():
 
 def init_db():
     conn = get_db_connection()
+    conn.execute('DROP TABLE IF EXISTS USERS;')
     conn.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,8 +24,8 @@ def add_user(username, password):
     conn.commit()
     conn.close()
 
-def get_user(username):
+def login(username, password):
     conn = get_db_connection()
-    user = conn.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+    user = conn.execute('SELECT * FROM users WHERE username = ? and password = ?', (username, password)).fetchone()
     conn.close()
     return user
