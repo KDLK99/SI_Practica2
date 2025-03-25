@@ -5,7 +5,6 @@ import plotly
 from flask import render_template
 import json
 import main_program
-import stats
 import plotly.express as px
 
 app = Flask(__name__)
