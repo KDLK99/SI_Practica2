@@ -65,6 +65,10 @@ def register():
     
     return render_template('register.html')
 
+@app.route('/estadisticas')
+def estadisticas():
+    return render_template('estadisticas.html')
+
 if __name__ == '__main__':
     init_db()
     main_program.load_data_from_json()
