@@ -1,7 +1,10 @@
+import sqlite3
 import pandas as pd
-from flask import Flask
+from flask import Flask, json
+import plotly
 import plotly.graph_objects as go
 from flask import render_template, request, redirect, url_for, session, flash
+import ex1
 import main_program
 import plotly.express as px
 from database import init_db, add_user, login as user_login
@@ -65,9 +68,47 @@ def register():
     
     return render_template('register.html')
 
-@app.route('/estadisticas')
+@app.route('/estadisticas', methods=['GET'])
 def estadisticas():
-    return render_template('estadisticas.html')
+    con = sqlite3.connect('../docs/datos.db')
+    clientes = pd.read_sql_query("SELECT * FROM clientes", con)
+    maxClientes = len(clientes)
+
+    incidentes = pd.read_sql_query("SELECT * FROM tipos_incidentes", con)
+    maxIncidentes = len(incidentes)
+
+    nClientes = request.args.get('nClientes')
+    nIncidentes = request.args.get('nIncidentes')
+
+    if nClientes is None or nClientes <= 0 or nClientes > maxClientes:
+        nClientes = 5
+    if nIncidentes is None or nIncidentes <= 0 or nIncidentes > maxIncidentes:
+        nIncidentes = 5
+
+    a = plotly.utils.PlotlyJSONEncoder
+    values_1 = ex1.topClients(nClientes)
+    fig1 = go.Figure(
+        data=[go.Bar(y=list(values_1.values), x=list(values_1.keys().values))],
+        layout_title_text="5 clientes más críticos",
+    )
+    fig1.update_layout(
+        xaxis_title="Nombre",
+        yaxis_title="Número de incidentes"
+    )
+    graph1 = json.dumps(fig1, cls=a)
+
+    values_2 = ex1.topIncidents(nIncidentes)
+    fig2 = go.Figure(
+        data=[go.Bar(y=list(values_2.values), x=list(values_2.keys().values))],
+        layout_title_text="5 clientes más críticos",
+    )
+    fig2.update_layout(
+        xaxis_title="Nombre",
+        yaxis_title="Tiempo de resolución"
+    )
+    graph2 = json.dumps(fig2, cls=a)
+    
+    return render_template('estadisticas.html', graph1=graph1, graph2=graph2)
 
 if __name__ == '__main__':
     init_db()
