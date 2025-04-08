@@ -110,20 +110,20 @@
                     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
                     <script type='text/javascript'>
                     var graphs = {{ graph1|safe }};
-                    Plotly.plot('chart1',graphs1,{});
+                    Plotly.plot('chart1',graphs,{});
                 </script>
             {% endif %}
             {{ top_clientes|safe }}
         </div>
 
         <div id="empleados" class="table-container" style="display: none;">
-            <h2>Top {{ x }} tipos de incidencia con mayor tiempo de resolución</h2>
-            {% if graph1 %}
+            <h2>Top {{ y }} tipos de incidencia con mayor tiempo de resolución</h2>
+            {% if graph2 %}
                 <div id='chart2' class='chart'”></div>
                     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
                     <script type='text/javascript'>
                     var graphs = {{ graph2|safe }};
-                    Plotly.plot('chart2',graphs2,{});
+                    Plotly.plot('chart2',graphs,{});
                 </script>
             {% endif %}
             {{ top_empleados|safe }}

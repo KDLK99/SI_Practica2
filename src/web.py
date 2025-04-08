@@ -77,8 +77,8 @@ def estadisticas():
     incidentes = pd.read_sql_query("SELECT * FROM tipos_incidentes", con)
     maxIncidentes = len(incidentes)
 
-    nClientes = request.args.get('nClientes')
-    nIncidentes = request.args.get('nIncidentes')
+    nClientes = int(request.args.get('nClientes'))
+    nIncidentes = int(request.args.get('nIncidentes'))
 
     if nClientes is None or nClientes <= 0 or nClientes > maxClientes:
         nClientes = 5
@@ -89,26 +89,26 @@ def estadisticas():
     values_1 = ex1.topClients(nClientes)
     fig1 = go.Figure(
         data=[go.Bar(y=list(values_1.values), x=list(values_1.keys().values))],
-        layout_title_text="5 clientes más críticos",
+        layout_title_text=f"{nClientes} clientes más críticos",
     )
     fig1.update_layout(
         xaxis_title="Nombre",
         yaxis_title="Número de incidentes"
     )
-    graph1 = json.dumps(fig1, cls=a)
+    graph1 = fig1.to_json()
 
     values_2 = ex1.topIncidents(nIncidentes)
     fig2 = go.Figure(
-        data=[go.Bar(y=list(values_2.values), x=list(values_2.keys().values))],
-        layout_title_text="5 clientes más críticos",
+        data=[go.Bar(y=list(values_2["result"]), x=list(values_2["nombre"]))],
+        layout_title_text=f"{nIncidentes} clientes más críticos",
     )
     fig2.update_layout(
         xaxis_title="Nombre",
         yaxis_title="Tiempo de resolución"
     )
-    graph2 = json.dumps(fig2, cls=a)
+    graph2 = fig2.to_json()
     
-    return render_template('estadisticas.html', graph1=graph1, graph2=graph2)
+    return render_template('estadisticas.html', graph1=graph1, graph2=graph2, x=nClientes, y=nIncidentes)
 
 if __name__ == '__main__':
     init_db()
