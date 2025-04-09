@@ -1,7 +1,10 @@
+import sqlite3
 import pandas as pd
-from flask import Flask
+from flask import Flask, json
+import plotly
 import plotly.graph_objects as go
 from flask import render_template, request, redirect, url_for, session, flash
+import ex1
 import main_program
 import plotly.express as px
 from database import init_db, add_user, login as user_login
@@ -65,9 +68,47 @@ def register():
     
     return render_template('register.html')
 
-@app.route('/estadisticas')
+@app.route('/estadisticas', methods=['GET'])
 def estadisticas():
-    return render_template('estadisticas.html')
+    con = sqlite3.connect('../docs/datos.db')
+    clientes = pd.read_sql_query("SELECT * FROM clientes", con)
+    maxClientes = len(clientes)
+
+    incidentes = pd.read_sql_query("SELECT * FROM tipos_incidentes", con)
+    maxIncidentes = len(incidentes)
+
+    nClientes = int(request.args.get('nClientes'))
+    nIncidentes = int(request.args.get('nIncidentes'))
+
+    if nClientes is None or nClientes <= 0 or nClientes > maxClientes:
+        nClientes = 5
+    if nIncidentes is None or nIncidentes <= 0 or nIncidentes > maxIncidentes:
+        nIncidentes = 5
+
+    a = plotly.utils.PlotlyJSONEncoder
+    values_1 = ex1.topClients(nClientes)
+    fig1 = go.Figure(
+        data=[go.Bar(y=list(values_1.values), x=list(values_1.keys().values))],
+        layout_title_text=f"{nClientes} clientes más críticos",
+    )
+    fig1.update_layout(
+        xaxis_title="Nombre",
+        yaxis_title="Número de incidentes"
+    )
+    graph1 = fig1.to_json()
+
+    values_2 = ex1.topIncidents(nIncidentes)
+    fig2 = go.Figure(
+        data=[go.Bar(y=list(values_2["result"]), x=list(values_2["nombre"]))],
+        layout_title_text=f"{nIncidentes} clientes más críticos",
+    )
+    fig2.update_layout(
+        xaxis_title="Nombre",
+        yaxis_title="Tiempo de resolución"
+    )
+    graph2 = fig2.to_json()
+    
+    return render_template('estadisticas.html', graph1=graph1, graph2=graph2, x=nClientes, y=nIncidentes)
 
 if __name__ == '__main__':
     init_db()
