@@ -10,18 +10,26 @@ import pandas as pd
 with open("../docs/data_clasified.json", "r") as file:
     data = json.load(file)["tickets_emitidos"]
 
+
 # Preprocesamiento: transformar los datos a una tabla estructurada
 def extract_features(ticket):
-    total_tiempo_contacto = sum(c["tiempo"] for c in ticket["contactos_con_empleados"])
     dias_abierto = (pd.to_datetime(ticket["fecha_cierre"]) - pd.to_datetime(ticket["fecha_apertura"])).days
-    return {
-        "es_mantenimiento": int(ticket["es_mantenimiento"]),
-        "satisfaccion_cliente": ticket["satisfaccion_cliente"],
-        "tipo_incidencia": ticket["tipo_incidencia"],
-        "tiempo_contacto_total": total_tiempo_contacto,
-        "dias_abierto": dias_abierto,
-        "es_critico": int(ticket["es_critico"])
-    }
+    try:
+        return {
+            "es_mantenimiento": int(ticket["es_mantenimiento"]),
+            "satisfaccion_cliente": ticket["satisfaccion_cliente"],
+            "tipo_incidencia": ticket["tipo_incidencia"],
+            "dias_abierto": dias_abierto,
+            "es_critico": int(ticket["es_critico"])
+        }
+    except:
+        return {
+            "es_mantenimiento": int(ticket["es_mantenimiento"]),
+            "satisfaccion_cliente": ticket["satisfaccion_cliente"],
+            "tipo_incidencia": ticket["tipo_incidencia"],
+            "dias_abierto": dias_abierto,
+        }
+
 
 tickets = [extract_features(t) for t in data]
 df = pd.DataFrame(tickets)
@@ -59,20 +67,22 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-def creacion_ticket():
-    cliente = int(input())
-    fecha_apertura = input()
-    fecha_cierre = input()
-    es_mantenimiento = bool(input())
-    satisfaccion = int(input())
-    tipo_incidencia = int(input())
 
-    data = {"cliente":cliente, "fecha_apertura":fecha_apertura, "fecha_cierre":fecha_cierre, "es_mantenimiento":es_mantenimiento,
-            "satisfaccion_cliente":satisfaccion, "tipo_incidencia":tipo_incidencia}
-    return pd.DataFrame(data, index=range(0, 0))
+def creacion_ticket():
+    cliente = 2
+    fecha_apertura = "2025-01-10"
+    fecha_cierre = "2025-01-12"
+    es_mantenimiento = True
+    satisfaccion = 4
+    tipo_incidencia = 3
+
+    data = {"cliente": cliente, "fecha_apertura": fecha_apertura, "fecha_cierre": fecha_cierre,
+            "es_mantenimiento": es_mantenimiento,
+            "satisfaccion_cliente": satisfaccion, "tipo_incidencia": tipo_incidencia}
+    a = extract_features(data)
+    return pd.DataFrame(a, index=range(0, 1))
 
 a = creacion_ticket()
 y_pred = clf.predict(a)
 
 print(y_pred)
-
