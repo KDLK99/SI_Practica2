@@ -124,10 +124,10 @@ X = df.drop('es_critico', axis=1)
 y = df['es_critico']
 
 # División de datos
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 # Entrenar Decision Tree Classifier
-tree_model = DecisionTreeClassifier(max_depth=3, random_state=42)
+tree_model = DecisionTreeClassifier()
 tree_model.fit(X_train, y_train)
 
 # Predicciones y evaluación

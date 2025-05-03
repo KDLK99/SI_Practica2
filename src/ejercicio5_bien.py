@@ -1,12 +1,15 @@
 import json
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 import pandas as pd
 
 # Cargar los datos desde un archivo JSON
+from sklearn.tree import DecisionTreeClassifier
+
 with open("../docs/data_clasified.json", "r") as file:
     data = json.load(file)["tickets_emitidos"]
 
@@ -73,8 +76,8 @@ def creacion_ticket():
     fecha_apertura = "2025-01-10"
     fecha_cierre = "2025-01-12"
     es_mantenimiento = True
-    satisfaccion = 4
-    tipo_incidencia = 3
+    satisfaccion = 1
+    tipo_incidencia = 1
 
     data = {"cliente": cliente, "fecha_apertura": fecha_apertura, "fecha_cierre": fecha_cierre,
             "es_mantenimiento": es_mantenimiento,
@@ -84,5 +87,24 @@ def creacion_ticket():
 
 a = creacion_ticket()
 y_pred = clf.predict(a)
+
+print(y_pred)
+
+# Decision Tree
+# Entrenar Decision Tree Classifier
+tree_model = DecisionTreeClassifier()
+tree_model.fit(X_train, y_train)
+
+# Predicciones y evaluación
+b = creacion_ticket()
+y_pred = tree_model.predict(b)
+
+print(y_pred)
+
+clf = RandomForestClassifier(max_depth=2, random_state=0,n_estimators=10)
+clf.fit(X_train, y_train)
+
+c = creacion_ticket()
+y_pred = clf.predict(c)
 
 print(y_pred)
