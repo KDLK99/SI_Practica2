@@ -4,7 +4,7 @@ from flask import Flask, json
 import plotly
 import plotly.graph_objects as go
 from flask import render_template, request, redirect, url_for, session, flash
-import ex1
+import ejercicio_1
 import main_program
 import plotly.express as px
 from database import init_db, add_user, login as user_login
@@ -77,19 +77,25 @@ def estadisticas():
     incidentes = pd.read_sql_query("SELECT * FROM tipos_incidentes", con)
     maxIncidentes = len(incidentes)
 
-    nClientes = int(request.args.get('nClientes'))
-    nIncidentes = int(request.args.get('nIncidentes'))
+    nClientes = request.args.get('nClientes')
+    if nClientes is None:
+        nClientes = -1
+    nClientes = int(nClientes)
 
-    if nClientes is None or nClientes <= 0 or nClientes > maxClientes:
+    nIncidentes = request.args.get('nIncidentes')
+    if nIncidentes is None:
+        nIncidentes = -1
+    nIncidentes = int(nIncidentes)
+
+    if nClientes <= 0 or nClientes > maxClientes:
         nClientes = 5
-    if nIncidentes is None or nIncidentes <= 0 or nIncidentes > maxIncidentes:
+    if nIncidentes <= 0 or nIncidentes > maxIncidentes:
         nIncidentes = 5
 
     a = plotly.utils.PlotlyJSONEncoder
-    values_1 = ex1.topClients(nClientes)
+    values_1 = ejercicio_1.topClients(nClientes)
     fig1 = go.Figure(
         data=[go.Bar(y=list(values_1.values), x=list(values_1.keys().values))],
-        layout_title_text=f"{nClientes} clientes más críticos",
     )
     fig1.update_layout(
         xaxis_title="Nombre",
@@ -97,10 +103,9 @@ def estadisticas():
     )
     graph1 = fig1.to_json()
 
-    values_2 = ex1.topIncidents(nIncidentes)
+    values_2 = ejercicio_1.topIncidents(nIncidentes)
     fig2 = go.Figure(
         data=[go.Bar(y=list(values_2["result"]), x=list(values_2["nombre"]))],
-        layout_title_text=f"{nIncidentes} clientes más críticos",
     )
     fig2.update_layout(
         xaxis_title="Nombre",

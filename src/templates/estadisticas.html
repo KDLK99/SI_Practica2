@@ -98,12 +98,28 @@
         
         <br>
         <div class="tabs">
-            <button class="tab-button" onclick="showTable('productos')">Clientes</button>
-            <button class="tab-button" onclick="showTable('empleados')">Empleados</button>
+            <button class="tab-button" onclick="showTable('clientes')">Clientes</button>
+            <button class="tab-button" onclick="showTable('incidencias')">incidencias</button>
         </div>
         <br>
 
-        <div id="productos" class="table-container">
+        <form id="clientes" action="/estadisticas" method="GET">
+            <div class="form-group">
+                <label for="nClientes">Número de clientes a mostrar:</label>
+                <input type="number" id="nClientes" name="nClientes" class="form-control" min="0" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+
+        <form id="incidencias" action="/estadisticas" method="GET">
+            <div class="form-group">
+                <label for="nIncidentes">Número de incidencias a mostrar:</label>
+                <input type="number" id="nIncidentes" name="nIncidentes" class="form-control" min="0" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+
+        <div id="clientes" class="table-container">
             <h2>Top {{ x }} clientes con más incidencias reportadas</h2>
             {% if graph1 %}
                 <div id='chart1' class='chart'”></div>
@@ -113,10 +129,9 @@
                     Plotly.plot('chart1',graphs,{});
                 </script>
             {% endif %}
-            {{ top_clientes|safe }}
         </div>
 
-        <div id="empleados" class="table-container" style="display: none;">
+        <div id="incidencias" class="table-container" style="display: none;">
             <h2>Top {{ y }} tipos de incidencia con mayor tiempo de resolución</h2>
             {% if graph2 %}
                 <div id='chart2' class='chart'”></div>
@@ -126,22 +141,21 @@
                     Plotly.plot('chart2',graphs,{});
                 </script>
             {% endif %}
-            {{ top_empleados|safe }}
         </div>
     </div>
 
     <script>
         function showTable(tableId) {
             // Ocultar todas las tablas
-            document.getElementById('productos').style.display = 'none';
-            document.getElementById('empleados').style.display = 'none';
+            document.getElementById('clientes').style.display = 'none';
+            document.getElementById('incidencias').style.display = 'none';
 
             // Mostrar la tabla seleccionada
             document.getElementById(tableId).style.display = 'block';
         }
 
-        // Mostrar la tabla de productos por defecto al cargar la página
-        showTable('productos');
+        // Mostrar la tabla de clientes por defecto al cargar la página
+        showTable('clientes');
     </script>
 </body>
 </html>
