@@ -1,10 +1,8 @@
 import json
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 
@@ -51,14 +49,6 @@ reg.fit(X_train, y_train)
 y_pred_continuo = reg.predict(X_test)
 y_pred = (y_pred_continuo > 0.5).astype(int)  # Umbral para convertir a clasificación
 
-# Resultados
-print("Coeficientes del modelo:", reg.coef_)
-print("Intercepto:", reg.intercept_)
-print("Matriz de confusión:")
-print(confusion_matrix(y_test, y_pred))
-print("Reporte de clasificación:")
-print(classification_report(y_test, y_pred))
-
 # Visualización
 plt.scatter(range(len(y_test)), y_test, color="black", label="Reales")
 plt.scatter(range(len(y_pred)), y_pred, color="blue", marker='x', label="Predichos (umbralizado)")
@@ -102,6 +92,7 @@ b = creacion_ticket()
 y_pred = tree_model.predict(b)
 
 print(y_pred)
+
 # Mostrar el modelo
 plt.figure(figsize=(12, 8))
 plot_tree(
@@ -117,23 +108,23 @@ plt.tight_layout()
 plt.show()
 
 # Random Forest
-clf = RandomForestClassifier(max_depth=2, random_state=0,n_estimators=10)
-clf.fit(X_train, y_train)
+random_forest = RandomForestClassifier(max_depth=2, random_state=0,n_estimators=10)
+random_forest.fit(X_train, y_train)
 
 c = creacion_ticket()
-y_pred = clf.predict(c)
+y_pred = random_forest.predict(c)
 
 print(y_pred)
 
 # Mostrar modelo
-n_estimators = len(clf.estimators_)
+n_estimators = len(random_forest.estimators_)
 cols = 5  # Número de columnas por fila
 rows = (n_estimators + cols - 1) // cols  # Número de filas necesarias
 
 fig, axes = plt.subplots(rows, cols, figsize=(cols * 4, rows * 4))
 axes = axes.flatten()
 
-for i, tree in enumerate(clf.estimators_):
+for i, tree in enumerate(random_forest.estimators_):
     plot_tree(
         tree,
         feature_names=X.columns,
