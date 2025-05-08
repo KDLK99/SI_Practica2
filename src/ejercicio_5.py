@@ -117,7 +117,7 @@ def creacion_ticket():
     a = extract_features(data)
     return pd.DataFrame(a, index=range(0, 1))
 
-
+# Función para predecir un ticket
 def prediccion(decision, ticket, reg, tree_model, random_forest):
     result = None
     # Predicción con Regresión Lineal
