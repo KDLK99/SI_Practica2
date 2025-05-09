@@ -30,11 +30,10 @@ def linear_regression(X_train, y_train):
     reg = LinearRegression()
     reg.fit(X_train, y_train)
 
-    # Predicción
+    # Visualización
     y_pred_continuo = reg.predict(X_test)
     y_pred = (y_pred_continuo > 0.5).astype(int)  # Umbral para convertir a clasificación
 
-    # Visualización
     plt.scatter(range(len(y_test)), y_test, color="black", label="Reales")
     plt.scatter(range(len(y_pred)), y_pred, color="blue", marker='x', label="Predichos (umbralizado)")
     plt.title("Regresión Lineal sobre Tickets Críticos")
