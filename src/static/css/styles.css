@@ -70,3 +70,41 @@ th {
 tr:hover {
     background-color: #f1f1f1; /* Color de fondo al pasar el mouse sobre las filas */
 }
+
+/*Para el panel de noticias*/
+
+#gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.image-container {
+    position: relative;
+    cursor: pointer;
+}
+.image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+.image-text {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.image-subtext {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: gold;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 12px;
+}

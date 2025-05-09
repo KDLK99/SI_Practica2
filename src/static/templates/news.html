@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breacking News: Edición ciberataques</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="dashboard" class="tab-button">Dashboard</a>
+    </nav>
+    <h1>Breacking News: Edición ciberataques</h1>
+    <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" style="color:#000">
+        <p style="font-size: 19px;margin-top:10px">Consulta las últimas noticias sobre <i>#ciberataques</i>.</p>
+    </marquee>
+    <div id="gallery">
+        {% for image in images %}
+            <div class="image-container" onclick="window.location.href='{{ image.link }}'">
+                <img src="{{ image.src }}" alt="{{ image.text }}">
+                <div class="image-text">{{ image.text }}</div>
+                <div class="image-subtext">{{ image.subtext }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

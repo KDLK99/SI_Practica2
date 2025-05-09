@@ -14,7 +14,7 @@ import os
 from newsapi import NewsApiClient
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="static/templates")
 app.secret_key = os.urandom(30)
 
 @app.route('/')
@@ -35,12 +35,12 @@ def login_required(f):
 def dashboard():
     return render_template('dashboard.html')
 
-@app.route('/galery')
+@app.route('/news')
+@login_required
 def galey():
     newsapi = NewsApiClient(api_key='f7c4ca0f65974295b4064ecb7504ef41')
 
-    news = newsapi.get_everything(q='ciberataque',
-                                  searchIn='title', 
+    news = newsapi.get_everything(qintitle='ciberataque',
                                     language='es')
     i = 0
     images = [] 
@@ -54,7 +54,7 @@ def galey():
          i+=1
          if i == 9:
              break
-    return render_template('galery.html', images = images)
+    return render_template('news.html', images = images)
 
 
 
