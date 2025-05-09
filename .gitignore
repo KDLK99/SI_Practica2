@@ -1,3 +1,7 @@
+# DB
+docs/datos.db
+docs/users.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
