@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Principal</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="container text-center">
@@ -22,15 +23,15 @@
         <h1 class="mt-5">Bienvenido a la Aplicación</h1>
         <p class="mt-3">Aquí podrás consultar tus datos</p>
         <div class="mt-4">
-            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">Dashboard</a>
+            <a href="{{ url_for('dashboard') }}" class="button">Dashboard</a>
         </div>
         <p class="mt-3">¿Ya tienes cuenta?</p>
         <div class="mt-4">
-            <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+            <a href="{{ url_for('login') }}" class="button">Iniciar Sesión</a>
         </div>
         <p class="mt-3">¿A qué esperas?</p>
         <div class="mt-4">
-            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Registrarse</a>  
+            <a href="{{ url_for('register') }}" class="button">Registrarse</a>  
         </div>
     </div>
 </body>

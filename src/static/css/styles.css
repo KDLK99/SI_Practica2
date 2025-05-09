@@ -19,6 +19,34 @@ h1 {
     color: #333;
 }
 
+nav {
+    margin: 20px 0;
+    text-align: center; /* Centrar los botones */
+}
+.button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Eliminar subrayado */
+    display: inline-block; /* Para que se comporten como botones */
+    transition: background-color 0.3s; /* Efecto de transición */
+}
+.button:hover {
+    background-color: #45a049; /* Color al pasar el ratón */
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
+
 .tabs {
     display: flex;
     justify-content: center;
