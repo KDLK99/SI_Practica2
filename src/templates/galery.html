@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imágenes Dinámicas</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column; /* Cambia a columna para que el título esté encima de la galería */
+            align-items: center; /* Centra el contenido horizontalmente */
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px; /* Espacio debajo del título */
+            color: #333; /* Color del título */
+        }
+        #gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px; /* Espacio entre las imágenes */
+        }
+        .image-container {
+            position: relative;
+            cursor: pointer;
+        }
+        .image-container img {
+            width: 100%; /* Ajusta el ancho al 100% del contenedor */
+            height: auto; /* Mantiene la proporción de la imagen */
+            border-radius: 8px;
+        }
+        .image-text {
+            position: absolute;
+            bottom: 40px; /* Ajusta la posición del primer texto */
+            left: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 14px; /* Tamaño del primer texto */
+        }
+        .image-subtext {
+            position: absolute;
+            bottom: 10px; /* Ajusta la posición del segundo texto */
+            left: 10px;
+            color: gold; /* Color del segundo texto */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: bold; /* Estilo del segundo texto */
+            font-size: 12px; /* Tamaño del segundo texto */
+        }
+    </style>
+</head>
+<body>
+    <h1>Breacking News: Edición ciberataques</h1>
+    <div id="gallery">
+        {% for image in images %}
+            <div class="image-container" onclick="window.location.href='{{ image.link }}'">
+                <img src="{{ image.src }}" alt="{{ image.text }}">
+                <div class="image-text">{{ image.text }}</div>
+                <div class="image-subtext">{{ image.subtext }}</div> <!-- Segundo texto -->
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

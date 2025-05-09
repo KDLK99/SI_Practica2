@@ -7,7 +7,7 @@ def get_db_connection():
 
 def init_db():
     conn = get_db_connection()
-    conn.execute('DROP TABLE IF EXISTS USERS;')
+    #conn.execute('DROP TABLE IF EXISTS USERS;')
     conn.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

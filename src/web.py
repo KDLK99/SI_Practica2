@@ -6,9 +6,13 @@ import main_program
 import plotly.express as px
 from database import init_db, add_user, login as user_login
 from functools import wraps
+import hashlib
+import os
+from newsapi import NewsApiClient
+
 
 app = Flask(__name__)
-app.secret_key = 'tu_clave_secreta'
+app.secret_key = os.urandom(30)
 
 @app.route('/')
 def home():
@@ -28,13 +32,36 @@ def login_required(f):
 def dashboard():
     return render_template('dashboard.html')
 
+@app.route('/galery')
+def galey():
+    newsapi = NewsApiClient(api_key='f7c4ca0f65974295b4064ecb7504ef41')
+
+    news = newsapi.get_everything(q='ciberataque',
+                                  searchIn='title', 
+                                    language='es')
+    i = 0
+    images = [] 
+    for n in news['articles']:
+         img = {}
+         img['src'] = n['urlToImage']
+         img['text'] = n['title']
+         img['link'] = n['url']
+         img['subtext'] = n['source']['name']
+         images.append(img)
+         i+=1
+         if i == 9:
+             break
+    return render_template('galery.html', images = images)
+
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
-        user = user_login(username, password)
+        hashed_pass = hashlib.sha256(password.encode()).hexdigest()
+        user = user_login(username, hashed_pass)
         if user:
             session['username'] = username
             flash('Inicio de sesión exitoso', 'success')
@@ -56,8 +83,9 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        hashed_pass = hashlib.sha256(password.encode()).hexdigest()
         try:
-            add_user(username, password)
+            add_user(username, hashed_pass)
             flash('Usuario registrado exitosamente', 'success')
             return redirect(url_for('login'))
         except Exception as e:
@@ -66,6 +94,7 @@ def register():
     return render_template('register.html')
 
 @app.route('/estadisticas')
+@login_required
 def estadisticas():
     return render_template('estadisticas.html')
 
