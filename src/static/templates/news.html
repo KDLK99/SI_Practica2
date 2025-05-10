@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <nav>
-        <a href="dashboard" class="tab-button">Dashboard</a>
-    </nav>
     <h1>Breacking News: Edición ciberataques</h1>
     <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();" style="color:#000">
         <p style="font-size: 19px;margin-top:10px">Consulta las últimas noticias sobre <i>#ciberataques</i>.</p>
@@ -23,6 +20,8 @@
             </div>
         {% endfor %}
     </div>
-
+    <nav>
+        <a href="dashboard" class="tab-button">Dashboard</a>
+    </nav>
 </body>
 </html>

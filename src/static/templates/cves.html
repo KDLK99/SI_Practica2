@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Últimos 10 CVEs</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Últimos 10 CVEs</h1>
+    <br>
+    <table>
+        <tbody>
+            {% for dato in datos %}
+            <tr>
+                <td>{{ dato }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <nav>
+        <a href="dashboard" class="tab-button">Dashboard</a>
+    </nav>
+
+</body>
+</html>

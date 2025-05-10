@@ -20,9 +20,15 @@ h1 {
 }
 
 nav {
-    margin: 20px 0;
+    margin: 80px;
     text-align: center; /* Centrar los botones */
 }
+
+a {
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+}
+
+
 .button {
     background-color: #4CAF50;
     color: white;
@@ -57,7 +63,7 @@ header {
     background-color: #4CAF50; /* Color de fondo normal */
     color: white; /* Color del texto */
     border: none; /* Sin borde */
-    padding: 10px 20px; /* Espaciado interno */
+    padding: 20px 40px; /* Espaciado interno */
     margin: 0 5px; /* Espaciado entre botones */
     cursor: pointer; /* Cambia el cursor al pasar el mouse */
     border-radius: 5px; /* Bordes redondeados */
@@ -79,9 +85,9 @@ header {
 }
 
 table {
-    width: 100%;
+    width: 80%;
     border-collapse: collapse;
-    margin: 10px 0;
+    margin: 20px auto;
 }
 
 th, td {

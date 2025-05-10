@@ -5,6 +5,7 @@ import plotly
 import plotly.graph_objects as go
 from flask import render_template, request, redirect, url_for, session, flash
 import ejercicio_1
+import ejercicio_3
 import main_program
 import plotly.express as px
 from database import init_db, add_user, login as user_login
@@ -55,6 +56,13 @@ def galey():
          if i == 9:
              break
     return render_template('news.html', images = images)
+
+
+@app.route('/cves')
+@login_required
+def cves():
+    values = ejercicio_3.access_cve_api()
+    return render_template('cves.html', datos = values)
 
 
 
