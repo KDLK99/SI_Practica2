@@ -141,8 +141,18 @@ def estadisticas():
         yaxis_title="Tiempo de resolución"
     )
     graph2 = fig2.to_json()
+
+    values_3 = ejercicio_1.topEmpleados()
+    fig3 = go.Figure(
+        data=[go.Bar(y=list(values_3["tiempo"]), x=list(values_3["nombre"]))],
+    )
+    fig3.update_layout(
+        xaxis_title="Nombre",
+        yaxis_title="Tiempo de resolución"
+    )
+    graph3 = fig3.to_json()
     
-    return render_template('estadisticas.html', graph1=graph1, graph2=graph2, x=nClientes, y=nIncidentes)
+    return render_template('estadisticas.html', graph1=graph1, graph2=graph2, graph3=graph3 , x=nClientes, y=nIncidentes)
 
 if __name__ == '__main__':
     init_db()
