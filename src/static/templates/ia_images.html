@@ -3,37 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <title>Detector de clientes críticos</title>
+    <title>Gráficas de los modelos</title>
     <style>
-        /* static/styles.css */
-
         body {
             font-family: Arial, sans-serif;
-            text-align: center; /* Centra el texto y las imágenes */
-            background-color: #f4f4f4; /* Color de fondo suave */
-            padding: 20px; /* Espaciado alrededor del contenido */
+            text-align: center; 
+            background-color: #f4f4f4; 
+            padding: 20px; 
         }
 
         .image-container {
-            display: flex; /* Usa flexbox para alinear las imágenes */
-            justify-content: center; /* Centra las imágenes horizontalmente */
-            flex-wrap: wrap; /* Permite que las imágenes se envuelvan en varias líneas */
-            gap: 20px; /* Espacio entre las imágenes */
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            gap: 20px; 
         }
 
         .image-container img {
-            width: 300px; /* Ancho fijo para todas las imágenes */
-            height: auto; /* Mantiene la proporción de las imágenes */
-            border: 2px solid #ccc; /* Borde alrededor de las imágenes */
-            border-radius: 8px; /* Bordes redondeados */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
-            transition: transform 0.2s; /* Transición suave para el efecto hover */
+            width: auto; 
+            height: 300px; 
+            border: 2px solid #ccc; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            transition: transform 0.2s; 
         }
 
         .image-container img:hover {
-            transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+            transform: scale(1.05); 
         }
-
     </style>
 </head>
 <body>
@@ -52,7 +49,7 @@
     </div>
     <nav>
         <a href="dashboard" class="tab-button">Dashboard</a>
-        <a href="ia" class="tab-button">Atras</a>
+        <a href="ia" class="tab-button">Atrás</a>
     </nav>
 </body>
 </html>

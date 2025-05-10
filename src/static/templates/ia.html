@@ -6,9 +6,9 @@
     <title>Detector de clientes críticos</title>
     <style>
         form {
-            background-color: white; /* Color de fondo del formulario */
-            padding: 20px; /* Espaciado interno */
-            border-radius: 8px; /* Bordes redondeados */
+            background-color: white; 
+            padding: 20px; 
+            border-radius: 8px; 
             text-align: center;
         }
         label {
@@ -19,8 +19,8 @@
             padding: 8px;
             width: 200px;
             margin-bottom: 15px;
-            border: 1px solid #ccc; /* Borde del campo */
-            border-radius: 4px; /* Bordes redondeados */
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
         }
     </style>
 </head>
@@ -29,26 +29,18 @@
         <h1 style="text-align: center;">Detector de clientes críticos</h1>
         <br>
         <form>
-            <!-- Campo numérico -->
             <label for="numero">ID del cliente:</label>
             <input type="number" id="cliente" name="cliente" required>
 
-            <!-- Campo de fecha -->
             <label for="fecha">Fecha de apertura:</label>
             <input type="date" id="fecha_apertura" name="fecha_apertura" required>
         
             <label for="fecha">Fecha de cierre:</label>
             <input type="date" id="fecha_cierre" name="fecha_cierre" required>
 
-            <!-- Desplegable para true/false -->
             <label for="es_mantenimiento">Indicador de mantenimiento:</label>
-            <select id="es_mantenimiento" name="es_mantenimiento" required>
-                <option value="" disabled selected>Selecciona una opción</option>
-                <option value="true">True</option>
-                <option value="false">False</option>
-            </select>
+            <input type="checkbox" id="es_mantenimiento" name="es_mantenimiento" value="true">
 
-            <!-- Desplegable con números del 1 al 5 -->
             <label for="satisfacion">Número de satisfación:</label>
             <select id="satisfacion" name="satisfacion" required>
                 <option value="" disabled selected>Selecciona un número</option>
@@ -64,7 +56,6 @@
                 <option value="10">10</option>
             </select>
 
-            <!-- Desplegable con números del 1 al 5 -->
             <label for="tipo_incidente">Tipo de incidente:</label>
             <select id="tipo_incidente" name="tipo_incidente" required>
                 <option value="" disabled selected>Selecciona un número</option>
@@ -79,7 +70,7 @@
             <select id="modelo" name="modelo" required>
                 <option value="" disabled selected>Selecciona un modelo</option>
                 <option value="0">Regresión Lineal</option>
-                <option value="1">Decisión Tree</option>
+                <option value="1">Decision Tree</option>
                 <option value="2">Random Forest</option>
             </select>
             <hr>
@@ -89,14 +80,11 @@
     {% endif %}
             <br>
             <button type="submit" class="tab-button" style="background-color: #4990c9">Enviar</button>
-            <!-- <img src="static/plot1.png" alt="Gráfica">
-            <img src="static/plot2.png" alt="Gráfica">
-            <img src="static/plot3.png" alt="Gráfica"> -->
         </form>
     </div>
     <nav>
         <a href="dashboard" class="tab-button">Dashboard</a>
-        <a href="ia_images" class="tab-button">Imagenes y modelos</a>
+        <a href="ia_images" class="tab-button">Imágenes y modelos</a>
     </nav>
 
 </body>

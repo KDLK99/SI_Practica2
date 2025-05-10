@@ -82,9 +82,7 @@ def ia():
         all_params = 0
     es_mantenimiento = request.args.get('es_mantenimiento')
     if es_mantenimiento is None:
-        all_params = 0
-    elif es_mantenimiento == "True":
-        es_mantenimiento = True
+        es_mantenimiento = False
     else:
         es_mantenimiento = False
     satisfacion = request.args.get('satisfacion')
