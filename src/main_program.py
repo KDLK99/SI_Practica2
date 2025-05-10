@@ -4,6 +4,8 @@ import json
 from pprint import pprint
 from datetime import datetime
 
+import web
+
 
 def load_data():
     with open('../docs/datos.json','r') as f:
@@ -126,10 +128,7 @@ def load_data_from_json():
 
 def main():
     load_data_from_json()
-
-
-
-    
+    web.main()
 
 
 if __name__ == '__main__':

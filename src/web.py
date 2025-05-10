@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 from flask import render_template, request, redirect, url_for, session, flash
 import ejercicio_1
 import ejercicio_3
+import ejercicio_5
 import main_program
 import plotly.express as px
 from database import init_db, add_user, login as user_login
@@ -40,7 +41,6 @@ def dashboard():
 @login_required
 def galey():
     newsapi = NewsApiClient(api_key='f7c4ca0f65974295b4064ecb7504ef41')
-
     news = newsapi.get_everything(qintitle='ciberataque',
                                     language='es')
     i = 0
@@ -65,6 +65,57 @@ def cves():
     return render_template('cves.html', datos = values)
 
 
+@app.route('/ia')
+@login_required
+def ia():
+    all_params = 1
+    cliente = request.args.get('cliente')
+    if cliente is None:
+        all_params = 0
+    else:
+        cliente = int(cliente)
+    fecha_apertura = request.args.get('fecha_apertura')
+    if fecha_apertura is None:
+        all_params = 0
+    fecha_cierre = request.args.get('fecha_cierre')
+    if fecha_cierre is None:
+        all_params = 0
+    es_mantenimiento = request.args.get('es_mantenimiento')
+    if es_mantenimiento is None:
+        all_params = 0
+    elif es_mantenimiento == "True":
+        es_mantenimiento = True
+    else:
+        es_mantenimiento = False
+    satisfacion = request.args.get('satisfacion')
+    if satisfacion is None:
+        all_params = 0
+    else:
+        satisfacion = int(satisfacion)
+    tipo_incidente = request.args.get('tipo_incidente')
+    if tipo_incidente is None:
+        all_params = 0
+    else:
+        tipo_incidente = int(tipo_incidente)
+    modelo = request.args.get('modelo')
+    if modelo is None:
+        all_params = 0
+    
+    if all_params == 0:
+        return render_template('ia.html')
+    else:
+        ticket = ejercicio_5.creacion_ticket(cliente, fecha_apertura, fecha_cierre, es_mantenimiento, satisfacion, tipo_incidente)
+        value = ejercicio_5.ejercicio5(modelo, ticket)
+        if value[0] == 1:
+            value = "El nuevo cliente será crítico"
+        else:
+            value = "El nuevo cliente NO será crítico"
+        return render_template('ia.html', value = value)
+
+@app.route('/ia_images')
+@login_required
+def ia_images():
+    return render_template('ia_images.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -162,7 +213,11 @@ def estadisticas():
     
     return render_template('estadisticas.html', graph1=graph1, graph2=graph2, graph3=graph3 , x=nClientes, y=nIncidentes)
 
-if __name__ == '__main__':
+def main():
     init_db()
     main_program.load_data_from_json()
+    ejercicio_5.prepare_ejercicio5()
     app.run(debug = True)
+
+if __name__ == '__main__':
+    main()

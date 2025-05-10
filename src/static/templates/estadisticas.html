@@ -8,17 +8,6 @@
 </head>
 <body>
     <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="alert alert-dismissible fade show" role="alert">
-                <ul>
-                {% for category, message in messages %}
-                    <p class="alert alert-{{ category }}">{{ message }}</p>
-                {% endfor %}
-                </ul>
-                </div>
-            {% endif %}
-        {% endwith %}
         <h1>Estadísticas</h1>
         
         <br>

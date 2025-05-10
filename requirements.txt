@@ -2,3 +2,4 @@ pandas
 flask
 plotly
 newsapi-python
+scikit-learn

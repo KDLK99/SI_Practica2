@@ -6,6 +6,10 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 
+reg = 0
+tree_model = 0
+random_forest = 0
+
 # Preprocesamiento: transformar los datos a una tabla estructurada
 def extract_features(ticket):
     dias_abierto = (pd.to_datetime(ticket["fecha_cierre"]) - pd.to_datetime(ticket["fecha_apertura"])).days
@@ -25,7 +29,7 @@ def extract_features(ticket):
             "dias_abierto": dias_abierto,
         }
 
-def linear_regression(X_train, y_train):
+def linear_regression(X_train, y_train, X_test, y_test):
     # Regresión lineal
     reg = LinearRegression()
     reg.fit(X_train, y_train)
@@ -41,11 +45,14 @@ def linear_regression(X_train, y_train):
     plt.ylabel("¿Crítico?")
     plt.legend()
     plt.grid(True)
-    plt.show()
+    # plt.show()
+    plt.savefig("static/plot1.png")
+    plt.close()
+
 
     return reg
 
-def decision_tree(X_train, y_train):
+def decision_tree(X_train, y_train, X):
     # Decision Tree
     tree_model = DecisionTreeClassifier()
     tree_model.fit(X_train, y_train)
@@ -62,11 +69,13 @@ def decision_tree(X_train, y_train):
     )
     plt.title('Árbol de Decisión (profundidad máxima = 3)')
     plt.tight_layout()
-    plt.show()
+    # plt.show()
+    plt.savefig("static/plot2.png")
+    plt.close()
 
     return tree_model
 
-def randomForest(X_train, y_train):
+def randomForest(X_train, y_train, X):
     # Random Forest
     random_forest = RandomForestClassifier(max_depth=2, random_state=0,n_estimators=10)
     random_forest.fit(X_train, y_train)
@@ -97,19 +106,14 @@ def randomForest(X_train, y_train):
         fig.delaxes(axes[j])
 
     plt.tight_layout()
-    plt.show()
+    # plt.show()
+    plt.savefig("static/plot3.png")
+    plt.close()
 
     return random_forest
 
 # Función para crear tickets
-def creacion_ticket():
-    cliente = 5
-    fecha_apertura = "2025-05-07"
-    fecha_cierre = "2025-05-14"
-    es_mantenimiento = False
-    satisfaccion = 3
-    tipo_incidencia = 4
-
+def creacion_ticket(cliente, fecha_apertura, fecha_cierre, es_mantenimiento, satisfaccion, tipo_incidencia):
     data = {"cliente": cliente, "fecha_apertura": fecha_apertura, "fecha_cierre": fecha_cierre,
             "es_mantenimiento": es_mantenimiento,
             "satisfaccion_cliente": satisfaccion, "tipo_incidencia": tipo_incidencia}
@@ -137,26 +141,28 @@ def prediccion(decision, ticket, reg, tree_model, random_forest):
 
     return result
 
-# Leer el archivo de datos ya clasificados
-with open("../docs/data_clasified.json", "r") as file:
-    data = json.load(file)["tickets_emitidos"]
+# Leer el archivo de datos ya clasificadosç
+def ejercicio5(decision, ticket):
+    return prediccion(decision, ticket, reg, tree_model, random_forest)
 
-# Sacar las caracterísiticas y crear un DataFrame con ello
-tickets = [extract_features(t) for t in data]
-df = pd.DataFrame(tickets)
+def prepare_ejercicio5():
+    with open("../docs/data_clasified.json", "r") as file:
+            data = json.load(file)["tickets_emitidos"]
 
-# Separar X e y
-X = df.drop("es_critico", axis=1)
-y = df["es_critico"]
+    # Sacar las caracterísiticas y crear un DataFrame con ello
+    tickets = [extract_features(t) for t in data]
+    df = pd.DataFrame(tickets)
 
-# División de datos
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+    # Separar X e y
+    X = df.drop("es_critico", axis=1)
+    y = df["es_critico"]
 
-reg = linear_regression(X_train, y_train)
-tree_model = decision_tree(X_train, y_train)
-random_forest = randomForest(X_train, y_train)
+    # División de datos
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-
-decision = '0'
-ticket = creacion_ticket()
-print(prediccion(decision, ticket, reg, tree_model, random_forest))
+    global reg 
+    reg = linear_regression(X_train, y_train, X_test, y_test)
+    global tree_model
+    tree_model = decision_tree(X_train, y_train, X)
+    global random_forest
+    random_forest = randomForest(X_train, y_train, X)

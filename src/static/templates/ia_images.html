@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Detector de clientes críticos</title>
+    <style>
+        /* static/styles.css */
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center; /* Centra el texto y las imágenes */
+            background-color: #f4f4f4; /* Color de fondo suave */
+            padding: 20px; /* Espaciado alrededor del contenido */
+        }
+
+        .image-container {
+            display: flex; /* Usa flexbox para alinear las imágenes */
+            justify-content: center; /* Centra las imágenes horizontalmente */
+            flex-wrap: wrap; /* Permite que las imágenes se envuelvan en varias líneas */
+            gap: 20px; /* Espacio entre las imágenes */
+        }
+
+        .image-container img {
+            width: 300px; /* Ancho fijo para todas las imágenes */
+            height: auto; /* Mantiene la proporción de las imágenes */
+            border: 2px solid #ccc; /* Borde alrededor de las imágenes */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+            transition: transform 0.2s; /* Transición suave para el efecto hover */
+        }
+
+        .image-container img:hover {
+            transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Gráficas de los modelos</h1>
+    <br>
+    <div class="image-container">
+        <a href="static/plot1.png" target="_blank">
+            <img src="static/plot1.png" alt="Gráfica 1">
+        </a>
+        <a href="static/plot2.png" target="_blank">
+            <img src="static/plot2.png" alt="Gráfica 2">
+        </a>
+        <a href="static/plot3.png" target="_blank">
+            <img src="static/plot3.png" alt="Gráfica 3">
+        </a>
+    </div>
+    <nav>
+        <a href="dashboard" class="tab-button">Dashboard</a>
+        <a href="ia" class="tab-button">Atras</a>
+    </nav>
+</body>
+</html>
