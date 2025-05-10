@@ -38,4 +38,4 @@ def topEmpleados():
     resultado = pd.merge(tiempo_empleados, empleados, on='id_emp', how='left')
 
     con.close()
-    return resultado[["nombre", "tiempo"]].nlargest(4, "tiempo")
+    return resultado[["nombre", "tiempo"]].nlargest(5, "tiempo")
