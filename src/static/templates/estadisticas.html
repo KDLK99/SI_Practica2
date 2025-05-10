@@ -131,6 +131,20 @@
             {% endif %}
         </div>
 
+        <div id="empleados_bot" class="tabs">
+            <button class="tab-button" onclick="showEmpleados('clientes')">Mostrar empleados</button>
+        </div>
+
+        <div id="empleados_graf" class="table-container">
+            <h2>Top 5 empleados que mas tiempo han empleado en resolución de incidentes</h2>
+                <div id='chart3' class='chart'”></div>
+                    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+                    <script type='text/javascript'>
+                    var graphs = {{ graph3|safe }};
+                    Plotly.plot('chart3',graphs,{});
+                </script>
+        </div>
+
         <div id="incidencias_graf" class="table-container" style="display: none;">
             <h2>Top {{ y }} tipos de incidencia con mayor tiempo de resolución</h2>
             {% if graph2 %}
@@ -145,12 +159,29 @@
     </div>
 
     <script>
+        function showEmpleados(tableId) {
+            const state = document.getElementById('empleados_graf').style.display;
+
+            if (tableId == 'clientes') {
+                document.getElementById('empleados_bot').style.display = 'block';
+            }
+            
+            if (state == 'none' && tableId == 'clientes' && document.getElementById('clientes_form').style.display == 'block') {
+                document.getElementById('empleados_graf').style.display = 'block';
+            }
+            else{
+                document.getElementById('empleados_graf').style.display = 'none';
+            }
+        }
+
         function showTable(tableId) {
             // Ocultar todas las tablas
             document.getElementById('clientes_form').style.display = 'none';
             document.getElementById('clientes_graf').style.display = 'none';
             document.getElementById('incidencias_form').style.display = 'none';
             document.getElementById('incidencias_graf').style.display = 'none';
+            document.getElementById('empleados_bot').style.display = 'none';
+            showEmpleados(tableId)
 
             // Mostrar la tabla seleccionada
             document.getElementById(tableId+'_form').style.display = 'block';
@@ -163,7 +194,7 @@
         if (lastShownTable) {
             showTable(lastShownTable);
         } else {
-            // Si no hay un elemento guardado no mostramos nada
+            // Si no hay un elemento guardado mostramos clientes
             showTable('None');
         }
     </script>

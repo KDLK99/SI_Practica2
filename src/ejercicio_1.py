@@ -27,3 +27,15 @@ def topIncidents(n):
 
     con.close()
     return result.nlargest(n, "result")
+
+def topEmpleados():
+    con = sqlite3.connect('../docs/datos.db')
+    
+    tickets_empleados = pd.read_sql_query("SELECT * FROM tickets_empleados", con)
+    empleados = pd.read_sql_query("SELECT * FROM empleados", con)
+
+    tiempo_empleados = tickets_empleados.groupby("id_emp")["tiempo"].sum().reset_index()
+    resultado = pd.merge(tiempo_empleados, empleados, on='id_emp', how='left')
+
+    con.close()
+    return resultado[["nombre", "tiempo"]].nlargest(4, "tiempo")
