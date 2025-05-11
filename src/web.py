@@ -1,9 +1,7 @@
 import sqlite3
 import pandas as pd
-from flask import Flask, json
-import plotly
 import plotly.graph_objects as go
-from flask import render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import ejercicio_1
 import ejercicio_3
 import ejercicio_5
@@ -177,7 +175,6 @@ def estadisticas():
     if nIncidentes <= 0 or nIncidentes > maxIncidentes:
         nIncidentes = 5
 
-    a = plotly.utils.PlotlyJSONEncoder
     values_1 = ejercicio_1.topClients(nClientes)
     fig1 = go.Figure(
         data=[go.Bar(y=list(values_1.values), x=list(values_1.keys().values))],
@@ -214,7 +211,7 @@ def main():
     init_db()
     main_program.load_data_from_json()
     ejercicio_5.prepare_ejercicio5()
-    app.run(debug = True)
+    app.run(debug = False)
 
 if __name__ == '__main__':
     main()
