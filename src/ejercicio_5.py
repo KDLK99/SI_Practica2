@@ -10,7 +10,7 @@ reg = 0
 tree_model = 0
 random_forest = 0
 
-
+# Función para extraer las características de un ticket concreto
 def extract_features(ticket):
     dias_abierto = (pd.to_datetime(ticket["fecha_cierre"]) - pd.to_datetime(ticket["fecha_apertura"])).days
     try:
@@ -29,12 +29,13 @@ def extract_features(ticket):
             "dias_abierto": dias_abierto,
         }
 
+# Regresión lineal
 def linear_regression(X_train, y_train, X_test, y_test):
-    
+    # Se crea una instancia del modelo y se entrena
     reg = LinearRegression()
     reg.fit(X_train, y_train)
 
-    
+    # Visualización
     y_pred_continuo = reg.predict(X_test)
     y_pred = (y_pred_continuo > 0.5).astype(int)  
 
@@ -52,12 +53,13 @@ def linear_regression(X_train, y_train, X_test, y_test):
 
     return reg
 
+# Decision Tree
 def decision_tree(X_train, y_train, X):
-    
+    # Se crea una instancia del modelo y se entrena
     tree_model = DecisionTreeClassifier()
     tree_model.fit(X_train, y_train)
 
-    
+    # Visualización
     plt.figure(figsize=(12, 8))
     plot_tree(
         tree_model,
@@ -75,13 +77,14 @@ def decision_tree(X_train, y_train, X):
 
     return tree_model
 
+# Random Forest
 def randomForest(X_train, y_train, X):
-    
+    # Crear instancia del modelo y entrenarlo
     random_forest = RandomForestClassifier(max_depth=2, random_state=0,n_estimators=10)
     random_forest.fit(X_train, y_train)
 
 
-    
+    # Visualización
     n_estimators = len(random_forest.estimators_)
     cols = 5  
     rows = (n_estimators + cols - 1) // cols  
@@ -112,7 +115,7 @@ def randomForest(X_train, y_train, X):
 
     return random_forest
 
-
+# Funcion para construir el ticket correspondiente
 def creacion_ticket(cliente, fecha_apertura, fecha_cierre, es_mantenimiento, satisfaccion, tipo_incidencia):
     data = {"cliente": cliente, "fecha_apertura": fecha_apertura, "fecha_cierre": fecha_cierre,
             "es_mantenimiento": es_mantenimiento,
@@ -123,10 +126,12 @@ def creacion_ticket(cliente, fecha_apertura, fecha_cierre, es_mantenimiento, sat
 
 def prediccion(decision, ticket, reg, tree_model, random_forest):
     result = None
-    
+
+    # Se elige el modelo correspondiente
     if decision == '0':
         result = reg.predict(ticket)
 
+        # Si el resultdo de la prediccion se encuentra por encima del 50%, es critico
         if result[0] >= 0.5:
             result[0] = 1
         else:
@@ -139,6 +144,7 @@ def prediccion(decision, ticket, reg, tree_model, random_forest):
     elif decision == '2':
         result = random_forest.predict(ticket)
 
+    # Se devuelve el resultado
     return result
 
 
@@ -146,20 +152,22 @@ def ejercicio5(decision, ticket):
     return prediccion(decision, ticket, reg, tree_model, random_forest)
 
 def prepare_ejercicio5():
+    # Se cargan los datos desde el archivo ya clasificado
     with open("../docs/data_clasified.json", "r") as file:
             data = json.load(file)["tickets_emitidos"]
 
-    
+    # Se extraen las caracterísitcas para construir un DataFrame
     tickets = [extract_features(t) for t in data]
     df = pd.DataFrame(tickets)
 
-    
+    # Separar X e Y
     X = df.drop("es_critico", axis=1)
     y = df["es_critico"]
 
-    
+    # Separar los datos en un conjunto de entrenamiento y test
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
+    # Se crean instrancias de los modelos, que se usarán posteriormente
     global reg 
     reg = linear_regression(X_train, y_train, X_test, y_test)
     global tree_model

@@ -3,15 +3,16 @@ import json
 
 
 def access_cve_api():
-    
+    # Se leen los datos de la web
     url = "https://cve.circl.lu/api/last/10"
     
     with urllib.request.urlopen(url) as response:
         body_json = response.read()
-    
+    # Se cargan en formato json
     body_dict = json.loads(body_json)
     
     list_strings = []
+    # Se va a ir comprobando cada uno de ellos para amoldarlo a uno de los posibles formatos
     for i in range(len(body_dict)):
         
         try:
