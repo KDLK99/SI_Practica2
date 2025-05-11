@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Gráficas de los modelos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center; 
+            background-color: #f4f4f4; 
+            padding: 20px; 
+        }
+
+        .image-container {
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+        }
+
+        .image-container img {
+            width: auto; 
+            height: 300px; 
+            border: 2px solid #ccc; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            transition: transform 0.2s; 
+        }
+
+        .image-container img:hover {
+            transform: scale(1.05); 
+        }
+    </style>
+</head>
+<body>
+    <h1>Gráficas de los modelos</h1>
+    <br>
+    <div class="image-container">
+        <a href="static/plot1.png" target="_blank">
+            <img src="static/plot1.png" alt="Gráfica 1">
+        </a>
+        <a href="static/plot2.png" target="_blank">
+            <img src="static/plot2.png" alt="Gráfica 2">
+        </a>
+        <a href="static/plot3.png" target="_blank">
+            <img src="static/plot3.png" alt="Gráfica 3">
+        </a>
+    </div>
+    <nav>
+        <a href="dashboard" class="tab-button">Dashboard</a>
+        <a href="ia" class="tab-button">Atrás</a>
+    </nav>
+</body>
+</html>

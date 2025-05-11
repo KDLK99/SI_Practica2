@@ -1,3 +1,5 @@
 pandas
 flask
-plotly==5.18.0
+plotly
+newsapi-python
+scikit-learn

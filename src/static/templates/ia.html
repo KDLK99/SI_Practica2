@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Detector de tickets críticos</title>
+    <style>
+        form {
+            background-color: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
+            padding: 8px;
+            width: 200px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">Detector de tickets críticos</h1>
+        <br>
+        <form>
+            <label for="numero">ID del cliente:</label>
+            <input type="number" id="cliente" name="cliente" required>
+
+            <label for="fecha">Fecha de apertura:</label>
+            <input type="date" id="fecha_apertura" name="fecha_apertura" required>
+        
+            <label for="fecha">Fecha de cierre:</label>
+            <input type="date" id="fecha_cierre" name="fecha_cierre" required>
+
+            <label for="es_mantenimiento">Indicador de mantenimiento:</label>
+            <input type="checkbox" id="es_mantenimiento" name="es_mantenimiento" value="true">
+
+            <label for="satisfacion">Número de satisfacción:</label>
+            <select id="satisfacion" name="satisfacion" required>
+                <option value="" disabled selected>Selecciona un número</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+
+            <label for="tipo_incidente">Tipo de incidente:</label>
+            <select id="tipo_incidente" name="tipo_incidente" required>
+                <option value="" disabled selected>Selecciona un número</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+
+            <label for="modelo">Modelo de IA:</label>
+            <select id="modelo" name="modelo" required>
+                <option value="" disabled selected>Selecciona un modelo</option>
+                <option value="0">Regresión Lineal</option>
+                <option value="1">Decision Tree</option>
+                <option value="2">Random Forest</option>
+            </select>
+            <hr>
+    {% if value %}
+        <h2>{{ value }}</h2>
+        <hr>
+    {% endif %}
+            <br>
+            <button type="submit" class="tab-button" style="background-color: #4990c9">Enviar</button>
+        </form>
+    </div>
+    <nav>
+        <a href="dashboard" class="tab-button">Dashboard</a>
+        <a href="ia_images" class="tab-button">Imágenes y modelos</a>
+    </nav>
+
+</body>
+</html>

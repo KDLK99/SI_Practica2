@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        form {
+            background-color: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
+            padding: 8px;
+            width: 200px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Estadísticas</h1>
+        
+        <br>
+        <div class="tabs">
+            <button class="button" style="background-color: #4990c9" onclick="showTable('clientes')">Clientes</button>
+            <button class="button" style="background-color: #4990c9" onclick="showTable('incidencias')">Incidencias</button>
+        </div>
+        <br>
+
+        <form id="clientes_form" action="/estadisticas" method="GET">
+            <div class="form-group">
+                <label for="nClientes">Número de clientes a mostrar:</label>
+                <input type="number" id="nClientes" name="nClientes" class="form-control" min="0" required>
+                <button type="submit" class="button" style="background-color: #b6b6b6; padding: 10px 20px;">Enviar</button>
+            </div>
+            
+        </form>
+
+        <form id="incidencias_form" action="/estadisticas" method="GET">
+            <div class="form-group">
+                <label for="nIncidentes">Número de incidencias a mostrar:</label>
+                <input type="number" id="nIncidentes" name="nIncidentes" class="form-control" min="0" required>
+                <button type="submit" class="button" style="background-color: #b6b6b6; padding: 10px 20px;">Enviar</button>
+            </div>
+        </form>
+
+        <div id="clientes_graf" class="table-container">
+            <h2>Top {{ x }} clientes con más incidencias reportadas</h2>
+            {% if graph1 %}
+                <div id='chart1' class='chart'”></div>
+                    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+                    <script type='text/javascript'>
+                    var graphs = {{ graph1|safe }};
+                    Plotly.plot('chart1',graphs,{});
+                </script>
+            {% endif %}
+        </div>
+
+        <div id="empleados_bot" class="tabs">
+            <button class="button" style="background-color: #4990c9" onclick="showEmpleados('clientes')">Mostrar empleados</button>
+        </div>
+
+        <div id="empleados_graf" class="table-container">
+            <h2>Top 5 empleados que más tiempo han empleado en resolución de incidentes</h2>
+                <div id='chart3' class='chart'”></div>
+                    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+                    <script type='text/javascript'>
+                    var graphs = {{ graph3|safe }};
+                    Plotly.plot('chart3',graphs,{});
+                </script>
+        </div>
+
+        <div id="incidencias_graf" class="table-container" style="display: none;">
+            <h2>Top {{ y }} tipos de incidencia con mayor tiempo de resolución</h2>
+            {% if graph2 %}
+                <div id='chart2' class='chart'”></div>
+                    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+                    <script type='text/javascript'>
+                    var graphs = {{ graph2|safe }};
+                    Plotly.plot('chart2',graphs,{});
+                </script>
+            {% endif %}
+        </div>
+    </div>
+
+        <nav>
+            <a href="dashboard" class="tab-button">Dashboard</a>
+        </nav>
+
+    <script>
+        function showEmpleados(tableId) {
+            const state = document.getElementById('empleados_graf').style.display;
+
+            if (tableId == 'clientes') {
+                document.getElementById('empleados_bot').style.display = 'block';
+            }
+            
+            if (state == 'none' && tableId == 'clientes' && document.getElementById('clientes_form').style.display == 'block') {
+                document.getElementById('empleados_graf').style.display = 'block';
+            }
+            else{
+                document.getElementById('empleados_graf').style.display = 'none';
+            }
+        }
+
+        function showTable(tableId) {
+            document.getElementById('clientes_form').style.display = 'none';
+            document.getElementById('clientes_graf').style.display = 'none';
+            document.getElementById('incidencias_form').style.display = 'none';
+            document.getElementById('incidencias_graf').style.display = 'none';
+            document.getElementById('empleados_bot').style.display = 'none';
+            showEmpleados(tableId)
+
+            document.getElementById(tableId+'_form').style.display = 'block';
+            document.getElementById(tableId+'_graf').style.display = 'block';
+
+            localStorage.setItem('lastShownTable', tableId);
+        }
+        const lastShownTable = localStorage.getItem('lastShownTable');
+        if (lastShownTable) {
+            showTable(lastShownTable);
+        } else {
+            showTable('None');
+        }
+    </script>
+</body>
+</html>

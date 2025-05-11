@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-dismissible fade show" role="alert">
+                <ul>
+                {% for category, message in messages %}
+                    <p class="alert alert-{{ category }}">{{ message }}</p>
+                {% endfor %}
+                </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+    <h1>Panel de Control</h1>
+
+<nav>
+    <a href="estadisticas" class="button">Estadísticas</a>
+    <a href="cves" class="button">CVEs</a>
+    <a href="news" class="button">Noticias</a>
+    <a href="ia" class="button">IA</a>
+    <a href="logout" class="button" style="background-color: #d62121">Salir</a>
+</nav>
+
+<div class="container">
+    <h2>Bienvenido al Panel de Control</h2>
+    <p>Aquí puedes acceder a las diferentes secciones de la aplicación.</p>
+</div>
+
+</body>
+</html>
