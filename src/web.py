@@ -105,9 +105,9 @@ def ia():
         ticket = ejercicio_5.creacion_ticket(cliente, fecha_apertura, fecha_cierre, es_mantenimiento, satisfacion, tipo_incidente)
         value = ejercicio_5.ejercicio5(modelo, ticket)
         if value[0] == 1:
-            value = "El nuevo cliente será crítico"
+            value = "El nuevo ticket será crítico"
         else:
-            value = "El nuevo cliente NO será crítico"
+            value = "El nuevo ticket NO será crítico"
         return render_template('ia.html', value = value)
 
 @app.route('/ia_images')
