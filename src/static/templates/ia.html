@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <title>Detector de clientes críticos</title>
+    <title>Detector de tickets críticos</title>
     <style>
         form {
             background-color: white; 
@@ -26,7 +26,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 style="text-align: center;">Detector de clientes críticos</h1>
+        <h1 style="text-align: center;">Detector de tickets críticos</h1>
         <br>
         <form>
             <label for="numero">ID del cliente:</label>
@@ -41,7 +41,7 @@
             <label for="es_mantenimiento">Indicador de mantenimiento:</label>
             <input type="checkbox" id="es_mantenimiento" name="es_mantenimiento" value="true">
 
-            <label for="satisfacion">Número de satisfación:</label>
+            <label for="satisfacion">Número de satisfacción:</label>
             <select id="satisfacion" name="satisfacion" required>
                 <option value="" disabled selected>Selecciona un número</option>
                 <option value="1">1</option>
