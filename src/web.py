@@ -8,7 +8,6 @@ import ejercicio_1
 import ejercicio_3
 import ejercicio_5
 import main_program
-import plotly.express as px
 from database import init_db, add_user, login as user_login
 from functools import wraps
 import hashlib
